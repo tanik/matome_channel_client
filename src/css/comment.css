@@ -1,0 +1,59 @@
+@import url('variables.css');
+
+.comment{
+  border-bottom: 1px solid var(--borderColor);
+  &-header{
+    font-size: 16px;
+    &-num{
+      color: var(--commentHeaderNumColor);
+    }
+    &-name{
+      color: var(--commentHeaderNameColor);
+      margin-left: 20px; 
+    }
+    &-created_at{
+      color: #111;
+      margin-left: 20px; 
+    }
+    &-hash_id{
+      color: #111;
+      margin-left: 20px; 
+    }
+  }
+  &-body{
+    font-size: 14px;
+  }
+  &-tools{
+    text-align: center;
+    & button{
+      & span.button-text{
+        font-size: 18px;
+        margin-left: 5px;
+        vertical-align: top;
+      }
+      vertical-align: middle;
+      color: var(--noActiveIconColor);
+      font-size: 20px;
+      border: 0px;
+      background-color: var(--bgColor);
+    }
+    &-reply{
+      & button{
+        &:hover{
+          color: var(--replyIconColor);
+          & .glyphicon{
+          }
+        }
+      }
+    }
+    &-favorite{
+      & button{
+        &:hover{
+          color: var(--favoriteIconColor);
+          & .glyphicon{
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+import React from 'react';
+import { Navbar, FormGroup, FormControl, InputGroup, Button, Glyphicon, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import Auth from '../utils/auth';
+
+export default class Menu extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  sendCommand(e) {
+    let ENTER = 13
+    if (e.keyCode == ENTER) {
+      this.search()
+    }
+  }
+
+  search(){
+    // TODO
+  }
+
+  renderAuthMenu(){
+    if(Auth.isAuthorized()){
+      return(
+        <ul className="nav navbar-nav navbar-right">
+          <NavDropdown eventKey={1} title={ Auth.info().uid } id="basic-nav-dropdown">
+            <MenuItem eventKey={1.1}>Action</MenuItem>
+            <MenuItem divider />
+            <MenuItem eventKey={1.3} href="/logout">ログアウト</MenuItem>
+          </NavDropdown>
+        </ul>
+      )    
+    }else{
+      return(
+        <ul className="nav navbar-nav navbar-right">
+          <li className="nav-item"><Link to="/login">ログイン</Link></li>
+        </ul>
+      )
+    }
+  }
+
+  render () {
+    return (
+      <div>
+        <Navbar inverse className="menu-top">
+          <Navbar.Header>
+            <Navbar.Brand>
+              <Link to="/">まとめ＠ちゃんねる</Link>
+            </Navbar.Brand>
+            <Navbar.Toggle />
+          </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav>
+              <NavItem href="/boards">スレッド</NavItem>
+            </Nav>
+            <Navbar.Form pullLeft>
+              <FormGroup>
+                <InputGroup>
+                  <FormControl
+                    type="text"
+                    inputRef={ref => { this.input = ref }}
+                    placeholder="Search"
+                    onKeyDown={this.sendCommand.bind(this)}
+                  />
+                  <InputGroup.Button>
+                    <Button onClick={() => this.search()}>
+                      <Glyphicon glyph="search"/>
+                    </Button>
+                  </InputGroup.Button>
+                </InputGroup>
+              </FormGroup>
+            </Navbar.Form>
+            { this.renderAuthMenu() }
+          </Navbar.Collapse>
+        </Navbar>
+      </div>
+    )
+  }
+}

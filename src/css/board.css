@@ -1,0 +1,50 @@
+.board{
+  &-title{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-radius: 0px;
+    border-bottom: 0px;
+    display: flex;
+  }
+  &-show{
+    &-header{
+      margin-bottom: 0px;
+    }
+    &-body{
+      margin-bottom: 0px;
+      ul.nav-pills {
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+
+      }
+      ul.nav-pills > li.active > a{
+        color: #000;
+        background-color: #fff;
+      }
+      ul.nav-pills > li > a{
+        background-color: #fff;
+      }
+      .tab-pane{
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+      }
+    }
+  }
+  &-category{
+    &-root{
+      & nav{
+        margin-bottom: 0px;
+        border-radius: 0px;
+        border: 0px;
+      }
+    }
+    &-child{
+      margin-bottom: 20px;
+      & .breadcrumb{
+        margin-bottom: 0px;
+        background-color: #fff;
+      }
+    }
+  }
+}

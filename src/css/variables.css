@@ -1,0 +1,9 @@
+:root {
+  --bgColor: #ffffff;
+  --borderColor: #e7e7e7;
+  --noActiveIconColor: #d7d7d7;
+  --replyIconColor: #1da1f2;
+  --favoriteIconColor: #e0245e;
+  --commentHeaderNumColor: #1da1f2;
+  --commentHeaderNameColor: #17bf63;
+}
