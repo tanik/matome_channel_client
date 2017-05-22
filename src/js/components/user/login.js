@@ -18,7 +18,7 @@ export default class Login extends Component {
 
   login(e){
     e.preventDefault();
-    this.props.login(this.email.value, this.password.value, this.props.history)
+    this.props.login(this.email.value, this.password.value)
   }
 
   isValid(field){

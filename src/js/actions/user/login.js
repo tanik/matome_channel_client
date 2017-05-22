@@ -11,7 +11,7 @@ const loginFailure = (response) => {
   return { type: type.LOGIN_FAILURE, response: response }
 }
 
-export const loginAsync = (email, password, history) => {
+export const loginAsync = (email, password) => {
   return dispatch => {
     
     return MatomeChannel.Auth.login(email, password).then( (resp) => {

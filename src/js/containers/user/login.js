@@ -11,8 +11,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    login: (email, password, history) => {
-      dispatch(loginAsync(email, password, history))
+    login: (email, password) => {
+      dispatch(loginAsync(email, password))
     },
   }
 }
