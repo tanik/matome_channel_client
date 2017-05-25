@@ -3,6 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "jest": {
+    "collectCoverage": true,
+    "globals": {
+      "APP_CONFIG": {
+        "APP_ENV": "test",
+        "API_BASE": "http://localhost:3000"
+      }
+    }
+  },
   "devDependencies": {
     "autoprefixer": "^7.0.1",
     "babel-core": "^6.24.1",
@@ -53,6 +62,7 @@
     "babel-preset-stage-1": "^6.24.1",
     "bootstrap": "^3.3.7",
     "moment": "^2.18.1",
+    "node-env-file": "^0.1.8",
     "prop-types": "^15.5.9",
     "react": "^15.5.4",
     "react-bootstrap": "^0.30.9",

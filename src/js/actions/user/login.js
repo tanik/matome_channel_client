@@ -1,6 +1,5 @@
 import * as type from '../../constants/action_types'
 import { setNotices, setErrors } from '../../actions/message'
-import { setAuth } from '../../actions/user/auth'
 import { MatomeChannel } from '../../utils/matome_channel'
 
 const loginSuccess = (response) => {
@@ -14,13 +13,7 @@ const loginFailure = (response) => {
 export const loginAsync = (email, password) => {
   return dispatch => {
     
-    return MatomeChannel.Auth.login(email, password).then( (resp) => {
-      let auth= {
-        "access-token": resp.headers["access-token"],
-        uid: resp.headers.uid,
-        client: resp.headers.client
-      }
-      dispatch(setAuth(auth))
+    return MatomeChannel.Auth.login(email, password, dispatch).then( (resp) => {
       dispatch(loginSuccess(resp.data))
       dispatch(setNotices(["ログインしました！"]))
     }).catch( (error) => {

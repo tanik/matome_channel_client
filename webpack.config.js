@@ -1,6 +1,8 @@
+/* global APP_CONFIG */
 const webpack = require("webpack");
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const loadenv = require('node-env-file');
  
 module.exports = {
   context: __dirname + '/src',
@@ -37,6 +39,15 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      APP_CONFIG: ( () => {
+        loadenv("./.env")        
+        return JSON.stringify({
+          APP_ENV: process.env.APP_ENV,
+          API_BASE: process.env.API_BASE,
+        })
+      })()
+    }),
     new ExtractTextPlugin({ filename: '[name].css', disable: false, allChunks: true }),
     new webpack.LoaderOptionsPlugin({
       options: {

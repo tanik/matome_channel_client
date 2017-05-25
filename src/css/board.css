@@ -6,6 +6,36 @@
     border-bottom: 0px;
     display: flex;
   }
+  &-tool{
+    &-box{
+      & button{
+        & span.button-text{
+          font-size: 18px;
+          margin-left: 5px;
+          vertical-align: top;
+        }
+        margin-right: 10px;
+        vertical-align: middle;
+        color: var(--noActiveIconColor);
+        font-size: 20px;
+        border: 0px;
+        background-color: var(--wellBgColor);
+        &.new-button{
+          color: var(--newIconColor);
+        }
+        &.favorite-button{
+          &:hover{
+            color: var(--favoriteIconColor);
+          }
+        }
+        &.favorite-button{
+          &.my-favorite{
+            color: var(--favoriteIconColor);
+          }
+        }
+      }
+    }
+  }
   &-show{
     &-header{
       margin-bottom: 0px;

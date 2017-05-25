@@ -8,31 +8,13 @@ export default class CategoryList extends Component {
     super(props)
   }
 
-  componentWillMount() {
-    this.getCategoryList()
-  }
-
-  componentDidUpdate (prevProps) {
-    if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.props.changeCategory(this.props.match.params.id)
-    }
-  }
-
-  getCategoryList() {
-    this.props.getCategoryList()
-  }
-
-  categories() {
-    return( this.props.categories || [])
-  }
-
   rootCategories() {
-    let roots = this.categories().filter( category => { if(!category.parent_id){ return(category) }} )
+    let roots = this.props.getCategories().filter( category => { if(!category.parent_id){ return(category) }} )
     return roots
   }
 
   isSelected(category){
-    let selected = this.selectedCategory()
+    let selected = this.props.selectedCategory()
     if( !selected ){ return(false) }
     if( category.id == selected.id || category.id == selected.parent_id){
       return(true)
@@ -41,19 +23,12 @@ export default class CategoryList extends Component {
     }
   }
 
-  selectedCategory(){
-    let selected_id = this.props.selected_category_id
-    return(this.categories().find( category => {
-      return(category.id == selected_id)
-    }))
-  }
-
   selectedChildCategories() {
-    let selected = this.selectedCategory()
+    let selected = this.props.selectedCategory()
     if( !selected ){ return([]) }
     let target_id = ( selected.parent_id || selected.id)
     return(
-      this.categories().filter( category => {
+      this.props.getCategories().filter( category => {
         if(target_id == category.parent_id){ return(category) }
       })
     )
@@ -105,7 +80,7 @@ export default class CategoryList extends Component {
         </div>
         <div className="board-category-child container">
           { (() => {
-              if(this.selectedCategory()){
+              if(this.props.selectedCategory()){
                 return(
                     <ol className="breadcrumb">
                       <span>サブカテゴリ: </span>
@@ -122,8 +97,6 @@ export default class CategoryList extends Component {
 }
 
 CategoryList.propTypes = {
-  categories: PropTypes.array.isRequired,
-  selected_category_id: PropTypes.number.isRequired,
-  getCategoryList: PropTypes.func.isRequired,
-  changeCategory: PropTypes.func.isRequired,
+  getCategories: PropTypes.func.isRequired,
+  selectedCategory: PropTypes.func.isRequired,
 }

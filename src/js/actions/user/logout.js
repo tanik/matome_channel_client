@@ -13,7 +13,7 @@ const logoutFailure = () => {
 
 export const logoutAsync = () => {
   return dispatch => {
-    return MatomeChannel.Auth.logout().then( () => {
+    return MatomeChannel.Auth.logout(dispatch).then( () => {
       dispatch(setAuth({}))
       dispatch(logoutSuccess())
     }).catch( () => {

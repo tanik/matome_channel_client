@@ -19,4 +19,7 @@
     "react/jsx-uses-vars": "error",
     "no-console": ["error", { allow: ["warn", "error"] }]
   },
+  "globals": {
+    "APP_CONFIG": true
+  },
 }

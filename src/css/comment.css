@@ -55,5 +55,12 @@
         }
       }
     }
+    &-favorite{
+      &.my-favorite{
+        & button{
+          color: var(--favoriteIconColor);
+        }
+      }
+    }
   }
 }
