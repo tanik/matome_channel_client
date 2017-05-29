@@ -26,6 +26,14 @@ export default class ShowBoard extends Component {
         this.props.addComment(data.comment)
         return
       }
+      case "comment_image_added": {
+        this.props.addCommentImage(data.comment_image)
+        return
+      }
+      case "comment_website_added": {
+        this.props.addCommentWebsite(data.comment_website)
+        return
+      }
       case "comment_favorited": {
         this.props.changeFavoriteComment(data.favorite)
         return
@@ -198,4 +206,6 @@ ShowBoard.propTypes = {
   changeFavoriteBoard: PropTypes.func.isRequired,
   changeFavoriteComment: PropTypes.func.isRequired,
   postComment: PropTypes.func.isRequired,
+  addCommentImage: PropTypes.func.isRequired,
+  addCommentWebsite: PropTypes.func.isRequired,
 }

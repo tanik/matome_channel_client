@@ -1,6 +1,5 @@
 import * as type from '../../constants/action_types'
 import { MatomeChannel } from '../../utils/matome_channel'
-import { push } from 'react-router-redux'
 
 const getBoards =  (page, per, category_id, boards) => {
   return { type: type.GET_BOARDS, page: page, per: per, category_id: category_id, boards: boards }

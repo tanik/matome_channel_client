@@ -2,6 +2,7 @@ coverage/
 node_modules/
 .env
 dist/app.js
+dist/app.js.gz
 dist/app.css
 **/*.un~
 **/*.swp

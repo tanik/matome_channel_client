@@ -95,6 +95,54 @@ export default (state = initialState, action) => {
         }
       })
     }
+    case action_type.ADD_COMMENT_IMAGE: {
+      let board = state.board
+      let comments = board.comments.map( (comment) => {
+        if(comment.id == action.comment_image.comment_id){
+          comment.images.push(action.comment_image.image)
+        }
+        return(comment)
+      })
+      return {
+        board: {
+          id: board.id,
+          title: board.title,
+          fav_count: board.fav_count,
+          first_comment: board.first_comment,
+          res_count: board.res_count,
+          score: board.score,
+          thumbnail_url: board.thumbnail_url,
+          favorite_user_ids: board.favorite_user_ids,
+          current_user_id: board.current_user_id,
+          comments: comments,
+        },
+        post_comment_result: {},
+      }
+    }
+    case action_type.ADD_COMMENT_WEBSITE: {
+      let board = state.board
+      let comments = board.comments.map( (comment) => {
+        if(comment.id == action.comment_website.comment_id){
+          comment.websites.push(action.comment_website.website)
+        }
+        return(comment)
+      })
+      return {
+        board: {
+          id: board.id,
+          title: board.title,
+          fav_count: board.fav_count,
+          first_comment: board.first_comment,
+          res_count: board.res_count,
+          score: board.score,
+          thumbnail_url: board.thumbnail_url,
+          favorite_user_ids: board.favorite_user_ids,
+          current_user_id: board.current_user_id,
+          comments: comments,
+        },
+        post_comment_result: {},
+      }
+    }
     default:
       return state
   }

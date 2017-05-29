@@ -28,11 +28,11 @@ import '../css/footer.css'
 // store
 let store
 let DevTools
-if(APP_CONFIG.APP_ENV == "development"){
+if(APP_CONFIG.APP_ENV == "production"){
+  store = require("./stores/store_prod").store
+}else{
   store = require("./stores/store_dev").store
   DevTools = require("./stores/store_dev").DevTools
-}else{
-  store = require("./stores/store_prod").store
 }
 
 render(
@@ -53,7 +53,7 @@ render(
             <Route path="/about" component={About}/>
           </Switch>
           <Footer />
-          { (() => { if( APP_CONFIG.APP_ENV == "development" ){ return(<DevTools />) } })() }
+          { (() => { if( APP_CONFIG.APP_ENV != "production" ){ return(<DevTools />) } })() }
         </div>
       </BrowserRouter>
     </div>

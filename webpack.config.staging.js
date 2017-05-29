@@ -3,9 +3,10 @@ const webpack = require("webpack");
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const loadenv = require('node-env-file');
+const CompressionPlugin = require("compression-webpack-plugin");
 
-loadenv("./.env")
- 
+loadenv("./.env.staging")
+
 module.exports = {
   context: __dirname + '/src',
   entry: {
@@ -42,6 +43,9 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify("staging")
+      },
       APP_CONFIG: ( () => {
         return JSON.stringify({
           APP_ENV: process.env.APP_ENV,
@@ -60,5 +64,13 @@ module.exports = {
         ]
       }
     }),
+    new webpack.optimize.UglifyJsPlugin(),
+	  new CompressionPlugin({
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.(js|html|css)$/,
+      threshold: 10240,
+      minRatio: 0.8
+	  }),
   ],
 };

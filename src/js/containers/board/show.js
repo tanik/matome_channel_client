@@ -8,7 +8,9 @@ import {
   setFavoriteCommentAsync,
   changeFavoriteBoard,
   changeFavoriteComment,
-  postCommentAsync 
+  postCommentAsync,
+  addCommentImage,
+  addCommentWebsite
 } from '../../actions/board/show'
 import ShowBoard from '../../components/board/show'
 
@@ -39,7 +41,13 @@ function mapDispatchToProps(dispatch) {
     },
     postComment: (board_id, name, content) => {
       dispatch(postCommentAsync(board_id, name, content))
-    }
+    },
+    addCommentImage: (comment_image) => {
+      dispatch(addCommentImage(comment_image))
+    },
+    addCommentWebsite: (comment_website) => {
+      dispatch(addCommentWebsite(comment_website))
+    },
   }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShowBoard))
