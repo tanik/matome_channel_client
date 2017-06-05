@@ -49,7 +49,7 @@
       color: var(--noActiveIconColor);
       font-size: 20px;
       border: 0px;
-      background-color: var(--bgColor);
+      background-color: var(--clearColor);
     }
     &-reply{
       & button{

@@ -8,15 +8,30 @@ export default class Menu extends React.Component {
     super(props);
   }
 
+  componentWillMount() {
+    const currnet_path = this.props.location.pathname || ""
+    const matched = currnet_path.match(/\/boards\/search\/(.+)/)
+    if(matched){
+      const query = matched[1] || ""
+      this.setState({query: query})
+    }else{
+      this.setState({query: ""})
+    }
+  }
+
   sendCommand(e) {
-    let ENTER = 13
+    const ENTER = 13
     if (e.keyCode == ENTER) {
       this.search()
     }
   }
 
   search(){
-    // TODO
+    if(this.input.value.length > 0){
+      this.props.history.push('/boards/search/' + encodeURIComponent(this.input.value))
+    }else{
+      this.props.history.push('/boards')
+    }
   }
 
   renderAuthMenu(){
@@ -37,6 +52,10 @@ export default class Menu extends React.Component {
         </ul>
       )
     }
+  }
+
+  handleQueryChange(e){
+    this.setState({query: e.target.value})
   }
 
   render () {
@@ -60,10 +79,12 @@ export default class Menu extends React.Component {
                     type="text"
                     inputRef={ref => { this.input = ref }}
                     placeholder="Search"
-                    onKeyDown={this.sendCommand.bind(this)}
+                    onKeyDown={this.sendCommand.bind(this) }
+                    value={ this.state.query }
+                    onChange={ this.handleQueryChange.bind(this) }
                   />
                   <InputGroup.Button>
-                    <Button onClick={() => this.search()}>
+                    <Button onClick={ this.search.bind(this) }>
                       <Glyphicon glyph="search"/>
                     </Button>
                   </InputGroup.Button>

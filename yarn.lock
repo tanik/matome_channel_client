@@ -5213,7 +5213,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@~15.5.7:
+prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@~15.5.4, prop-types@~15.5.7:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -5380,6 +5380,10 @@ react-fontawesome@^1.6.1:
   dependencies:
     prop-types "^15.5.6"
 
+react-infinite-scroll-component@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-infinite-scroll-component/-/react-infinite-scroll-component-2.3.0.tgz#f31a58b599f25e91a05297fdda1671e6e7d8cbae"
+
 react-json-tree@^0.10.8:
   version "0.10.9"
   resolved "https://registry.yarnpkg.com/react-json-tree/-/react-json-tree-0.10.9.tgz#7263173a2cc8bf05eac63b0419c3ce75b232e284"
@@ -5396,6 +5400,12 @@ react-overlays@^0.6.12:
     dom-helpers "^3.2.0"
     react-prop-types "^0.4.0"
     warning "^3.0.0"
+
+react-photo-gallery@^5.6.1:
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/react-photo-gallery/-/react-photo-gallery-5.6.1.tgz#f905ea4a916d8286ba2d501a05754387a68dfc82"
+  dependencies:
+    prop-types "~15.5.4"
 
 react-prop-types@^0.4.0:
   version "0.4.0"

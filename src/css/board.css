@@ -1,3 +1,26 @@
+.board-list{
+  & .board{
+    & .header{
+      font-size: 20px;
+      & .score{
+        color: var(--scoreIconColor);
+        margin-right: 20px;
+      }
+      & .res-count{
+        color: var(--newIconColor);
+        margin-right: 20px;
+      }
+      & .favorites-count{
+        color: var(--favoriteIconColor);
+        margin-right: 20px;
+      }
+    }
+    & .title{
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+  }
+}
 .board{
   &-title{
     margin-top: 0px;
@@ -19,7 +42,10 @@
         color: var(--noActiveIconColor);
         font-size: 20px;
         border: 0px;
-        background-color: var(--wellBgColor);
+        background-color: var(--clearColor);
+        &.score{
+          color: var(--scoreIconColor);
+        }
         &.new-button{
           color: var(--newIconColor);
         }
@@ -39,6 +65,12 @@
   &-show{
     &-header{
       margin-bottom: 0px;
+      & .category-box{
+        background-color: var(--clearColor);
+        border: 0px;
+        padding-left: 0px;
+        margin-bottom: 0px;
+      }
     }
     &-body{
       margin-bottom: 0px;
@@ -55,9 +87,17 @@
       ul.nav-pills > li > a{
         background-color: #fff;
       }
-      .tab-pane{
+      &-content{
         border-left: 1px solid #ccc;
         border-right: 1px solid #ccc;
+        & ul{
+          margin-bottom: 0;
+          padding-left: 10px;
+          padding-right: 10px;
+          & li{
+            max-width: 260px;
+          }
+        }
       }
     }
   }

@@ -2,25 +2,29 @@ import axios from 'axios'
 import Auth from './auth'
 import { setAuth } from '../actions/user/auth'
 
-const api_base = APP_CONFIG.API_BASE
+axios.defaults.baseURL = APP_CONFIG.API_BASE
 
 // if use confirmation via email, need to set this to sign_up params 
 //const confirm_success_url = "http://localhost:4000/confirmed"
 
 class Client {
-  static request(config, dispatch){
+  static request(config, dispatch, needAuth=true){
     return new Promise( (resolve, reject) => {
-      config.headers = Auth.info()
-      axios(config).then( (response) => {
+      if(needAuth){
+        config.headers = Auth.info()
+      }
+      let instance = axios.create()
+      instance.request(config).then( (response) => {
         let auth = {
           "access-token": response.headers["access-token"],
           uid: response.headers.uid,
           client: response.headers.client
         }
         if( auth["access-token"] && auth.uid && auth.client ){
-          dispatch(setAuth(auth))
-        }
-        resolve(response)
+          if(needAuth){
+            dispatch(setAuth(auth))
+          }
+        }        resolve(response)
       }).catch( (error) => {
         if(error.response &&
            error.response.status == 401 ){
@@ -41,9 +45,9 @@ MatomeChannel.Category = class {
     return(
       Client.request({
         method: "get",
-        url: `${api_base}/categories`,
+        url: `/categories`,
         params: params,
-      }, dispatch)
+      }, dispatch, false)
     )
   }
 
@@ -55,7 +59,7 @@ MatomeChannel.Board = class {
     return(
       Client.request({
         method: "get",
-        url: `${api_base}/boards`,
+        url: `/boards`,
         params: params,
       }, dispatch)
     )
@@ -65,7 +69,7 @@ MatomeChannel.Board = class {
     return(
       Client.request({
         method: "get",
-        url: `${api_base}/boards/${id}`,
+        url: `/boards/${id}`,
         params: params,
       }, dispatch)
     )
@@ -75,7 +79,7 @@ MatomeChannel.Board = class {
     return(
       Client.request({
         method: "post",
-        url: `${api_base}/boards/`,
+        url: `/boards/`,
         data: {
           board: {
             category_id: category_id,
@@ -94,7 +98,7 @@ MatomeChannel.Board = class {
     return(
       Client.request({
         method: "put",
-        url: `${api_base}/boards/${board_id}/favorite`,
+        url: `/boards/${board_id}/favorite`,
         data: {},
       }, dispatch)
     )
@@ -103,12 +107,22 @@ MatomeChannel.Board = class {
 
 MatomeChannel.Comment = class {
 
-  static all(board_id, params={}, dispatch){
+  static all(board_id, gt_id, lt_id, dispatch){
+    let url
+    if(gt_id && lt_id){
+      url = `/boards/${board_id}/comments/gtlt/${gt_id}/${lt_id}`
+    }else if(gt_id){
+      url = `/boards/${board_id}/comments/gt/${gt_id}`
+    }else if(lt_id){
+      url = `/boards/${board_id}/comments/lt/${lt_id}`
+    }else{
+      url = `/boards/${board_id}/comments`
+    }
     return(
       Client.request({
         method: "get",
-        url: `${api_base}/boards/${board_id}/comments`,
-        params: params,
+        url: url,
+        params: {},
       }, dispatch)
     )
   }
@@ -117,7 +131,7 @@ MatomeChannel.Comment = class {
     return(
       Client.request({
         method: "get",
-        url: `${api_base}/boards/${board_id}/comments/${id}`,
+        url: `/boards/${board_id}/comments/${id}`,
         params: params,
       }, dispatch)
     )
@@ -127,7 +141,7 @@ MatomeChannel.Comment = class {
     return(
       Client.request({
         method: "post",
-        url: `${api_base}/boards/${board_id}/comments/`,
+        url: `/boards/${board_id}/comments/`,
         data: {
           name: name,
           content: content,
@@ -140,7 +154,7 @@ MatomeChannel.Comment = class {
     return(
       Client.request({
         method: "put",
-        url: `${api_base}/boards/${board_id}/comments/${id}/favorite`,
+        url: `/boards/${board_id}/comments/${id}/favorite`,
         data: {},
       }, dispatch)
     )
@@ -153,7 +167,7 @@ MatomeChannel.Auth = class {
     return(
       Client.request({
         method: "post",
-        url: `${api_base}/auth`,
+        url: `/auth`,
         data: {
           email: email,
           password: password,
@@ -167,7 +181,7 @@ MatomeChannel.Auth = class {
     return(
       Client.request({
         method: "post",
-        url: `${api_base}/auth/sign_in`,
+        url: `/auth/sign_in`,
         data: {
           email: email,
           password: password,
@@ -180,9 +194,8 @@ MatomeChannel.Auth = class {
     return(
       Client.request({
         method: "delete",
-        url: `${api_base}/auth/sign_out`,
+        url: `/auth/sign_out`,
       }, dispatch)
     )
   }
-
 }

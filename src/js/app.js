@@ -5,12 +5,12 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 // components
 import Home from './components/home'
-import Menu from './components/menu'
 import Inquiry from './components/inquiry'
 import About from './components/about'
 import Footer from './components/footer'
 
 // connected components
+import Menu from './containers/menu'
 import BoardList from './containers/board/list'
 import ShowBoard from './containers/board/show'
 import SignUp from './containers/user/sign_up'
@@ -47,6 +47,9 @@ render(
             <Route path="/login" component={Login}/>
             <Route path="/sign_up" component={SignUp}/>
             <Route path="/categories/:id/boards" component={BoardList}/>
+            <Route path="/boards/search/:query" component={BoardList}/>
+            <Route path="/boards/:id/images" component={ShowBoard}/>
+            <Route path="/boards/:id/websites" component={ShowBoard}/>
             <Route path="/boards/:id" component={ShowBoard}/>
             <Route path="/boards" component={BoardList}/>
             <Route path="/inquiry" component={Inquiry}/>

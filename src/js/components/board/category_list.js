@@ -68,7 +68,7 @@ export default class CategoryList extends Component {
           <nav className="navbar navbar-default">
             <div className="container">
               <div className="navbar-header">
-                <span className="navbar-brand">カテゴリ</span>
+                <Link to='/boards' className="navbar-brand">総合</Link>
               </div>
               <div className="collapse navbar-collapse">
                 <ul className="nav navbar-nav">

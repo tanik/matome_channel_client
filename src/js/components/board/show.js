@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { Grid, Row, Col, Well, Tabs, Tab, Glyphicon } from 'react-bootstrap';
+import { Grid, Row, Col, Well, Glyphicon, Breadcrumb, Thumbnail, ProgressBar } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
+import Gallery from 'react-photo-gallery';
 import Comment from '../../components/comment/comment';
 import NewComment from '../../components/comment/new';
 import BoardCable from '../../cable/board'
 import Auth from '../../utils/auth';
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 export default class ShowBoard extends Component {
   constructor(props) {
@@ -20,10 +23,26 @@ export default class ShowBoard extends Component {
     this.sub.unsubscribe()
   }
 
+  shouldComponentUpdate (nextProps) {
+    if (this.props.location.pathname !== nextProps.location.pathname) {
+      return(true)
+    }else{
+      return this.props !== nextProps
+    }
+  }
+
   cable_dispather(data){
     switch(data.action) {
       case "comment_added": {
         this.props.addComment(data.comment)
+        return
+      }
+      case "board_image_added": {
+        this.props.addBoardImage(data.board_image)
+        return
+      }
+      case "board_website_added": {
+        this.props.addBoardWebsite(data.board_website)
         return
       }
       case "comment_image_added": {
@@ -106,17 +125,36 @@ export default class ShowBoard extends Component {
     return(favorite_user_ids.includes(this.props.board.current_user_id))
   }
 
+  getMoreComment(){
+    const board_id = this.getID()
+    const comments = this.comments()
+    const last_comment = comments[comments.length-1]
+    if( last_comment ){
+      this.props.getComments(board_id, undefined, last_comment.id)
+    }
+  }
+
   renderComments(){
-    if(this.comments().length > 0){
+    const comments = this.comments()
+    if(comments.length > 0){
+      const hasMore = (comments[comments.length-1].num != 1)
       return(
-        this.comments().map( comment =>
-          <Comment key={comment.id}
-            current_user_id={ this.props.board.current_user_id }
-            comment={comment}
-            favorite={ this.favoriteComment.bind(this) }
-            reply={ this.reply.bind(this) }
-          />
-        )
+        <InfiniteScroll
+          next={ this.getMoreComment.bind(this) }
+          hasMore={ hasMore }
+          loader={ <ProgressBar active now={100} /> }
+          endMessage={ <div></div> } >
+          { comments.map( comment => {
+            return(
+              <Comment key={comment.id}
+                current_user_id={ this.props.board.current_user_id }
+                comment={comment}
+                favorite={ this.favoriteComment.bind(this) }
+                reply={ this.reply.bind(this) }
+              />
+            )
+          })}
+        </InfiniteScroll>
       )
     }else{
       return(<div>コメントがありません。</div>)
@@ -124,16 +162,106 @@ export default class ShowBoard extends Component {
   }
 
   renderWebsites(){
-    return(<div className="alert alert-warning">未実装なのだ・・・。</div>)
+    const websites = (this.props.board.websites || [])
+    return(
+      <ul className="list-inline">
+      {websites.map( website => {
+        return(
+          <li key={ `website-${website.id}` }>
+            <h5><Link to={ website.website.original_url }>{ website.website.title }</Link></h5>
+            <Thumbnail target="_BLANK" href={website.website.full_url} src={website.website.thumbnail_url} />
+          </li>
+        )
+      }) }
+      </ul>
+    )
   }
 
   renderImages(){
-    return(<div className="alert alert-warning">未実装なのだ・・・。</div>)
+    const images = (this.props.board.images || [])
+    const photo_sets = images.map( image => {
+      return({
+        src: image.image.full_url,
+        srcset: [
+          image.image.thumbnail_url
+        ],
+        width: image.image.width,
+        height: image.image.height,
+      })
+    })
+    return(
+      <Gallery
+        photos={photo_sets}
+        margin={1}
+        cols={4}
+        onClickPhoto={this.openImage.bind(this)}/>
+    )
+  }
 
+  openImage(index, event){
+    event.preventDefault();
+    window.open(this.props.board.images[index].image.full_url)
   }
 
   renderMovies(){
     return(<div className="alert alert-warning">未実装なのだ・・・。</div>)
+  }
+
+  renderContent(){
+    let target
+    let renderFunc
+    if(this.props.match.url == `/boards/${this.getID()}`){
+      target = "comments"
+      renderFunc = this.renderComments.bind(this)
+    }else if(this.props.match.url == `/boards/${this.getID()}/websites`){
+      target = "websites"
+      renderFunc = this.renderWebsites.bind(this)
+    }else if(this.props.match.url == `/boards/${this.getID()}/images`){
+      target = "images"
+      renderFunc = this.renderImages.bind(this)
+    }else{
+      target = null
+      renderFunc = () => {
+        return(<h5>そんなページはありません！</h5>)
+      }
+    }
+    return(
+      <div>
+        <ul className="nav nav-pills board-show-body-header">
+          <li role="presentation" className={ target == 'comments' ? 'active' : '' }>
+            <Link to={`/boards/${this.getID()}`}>コメント</Link>
+          </li>
+          <li role="presentation" className={ target == 'websites' ? 'active' : '' }>
+            <Link to={`/boards/${this.getID()}/websites`}>WEBサイト</Link>
+          </li>
+          <li role="presentation" className={ target == 'images' ? 'active' : '' }>
+            <Link to={`/boards/${this.getID()}/images`}>画像</Link>
+          </li>
+        </ul>
+        <div className='board-show-body-content'>
+          { renderFunc() }
+        </div>
+      </div>
+    )
+  }
+
+  renderCategory(){
+    const tree = this.props.board.category_tree || []
+    return(
+      <Breadcrumb className="category-box">
+      {
+        tree.map( category => {
+          return(
+            <Breadcrumb.Item
+              key={ `category-${category.id}` }
+              href={ `/categories/${category.id}/boards` }>
+              { category.name }
+            </Breadcrumb.Item>
+          )
+        })
+      }
+      </Breadcrumb>
+    )
   }
 
   render() {
@@ -145,8 +273,15 @@ export default class ShowBoard extends Component {
         <Well className="board-show-header">
           <Grid>
             <div className="clearfix">
-              <strong className="pull-left">カテゴリ：</strong>
+              <div className="pull-left">
+                { this.renderCategory() }
+              </div>
               <div className="board-tool-box pull-right">
+                <button className="score"
+                  title="スコア">
+                  <Glyphicon glyph="star" />
+                  <span className="button-text">{ this.props.board.score }</span>
+                </button>
                 <button className={ this.isMyFavorite() ? "favorite-button my-favorite" : "favorite-button" }
                   onClick={ this.favoriteBoard.bind(this) }
                   title="お気に入り">
@@ -161,31 +296,20 @@ export default class ShowBoard extends Component {
                 </button>
               </div>
             </div>
-            <h2>{ this.props.board.title }</h2>
+            <h3>{ this.props.board.title }</h3>
           </Grid>
         </Well>
         <Grid>
           <Row>
-            <Col xs={8}>
+            <Col xs={9}>
               <div className="board-show-body">
-                <Tabs defaultActiveKey={ "comment" } bsStyle="pills" id="noanim-tab-example">
-                  <Tab eventKey={ "comment" } title="コメント">
-                    { this.renderComments() }
-                  </Tab>
-                  <Tab eventKey={ "web" } title="WEBサイト">
-                    { this.renderWebsites() }
-                  </Tab>
-                  <Tab eventKey={ "image" } title="画像">
-                    { this.renderImages() }
-                  </Tab>
-                  <Tab eventKey={ "movie" } title="動画">
-                    { this.renderMovies() }
-                  </Tab>
-                </Tabs>
+                { this.renderContent() }
               </div>
             </Col>
-            <Col xs={4}>
-              Side Menu そのうち作る。
+            <Col xs={3}>
+              <div className='board-show-sidemenu'>
+                Side Menu そのうち作る。
+              </div>
             </Col>
           </Row>
         </Grid>
@@ -201,6 +325,7 @@ ShowBoard.propTypes = {
   board: PropTypes.object.isRequired,
   post_comment_result: PropTypes.object.isRequired,
   getBoard: PropTypes.func.isRequired,
+  getComments: PropTypes.func.isRequired,
   setFavoriteBoard: PropTypes.func.isRequired,
   setFavoriteComment: PropTypes.func.isRequired,
   changeFavoriteBoard: PropTypes.func.isRequired,

@@ -74,7 +74,7 @@ export default class Comment extends Component {
       { this.props.comment.images.map( (image) => {
           return(
             <li key={ `image-${image.id}` }>
-              <Thumbnail href={ image.full_url } src={ image.thumbnail_url } />
+              <Thumbnail target="_BLANK" href={ image.full_url } src={ image.thumbnail_url } />
             </li>
           )
         })

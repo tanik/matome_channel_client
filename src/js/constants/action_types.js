@@ -1,5 +1,8 @@
 // action types
 
+// menu
+export const CHANGE_QUERY                 = 'CHANGE_QUERY'
+
 // message
 export const SET_NOTICES                  = 'SET_NOTICES'
 export const SET_ERRORS                   = 'SET_ERRORS'
@@ -21,8 +24,12 @@ export const COMMENT_FAVORITE_SUCCESS     = 'COMMENT_FAVORITE_SUCCESS'
 export const COMMENT_FAVORITE_FAILURE     = 'COMMENT_FAVORITE_FAILURE'
 export const POST_COMMENT_SUCCESS         = 'POST_COMMENT_SUCCESS'
 export const POST_COMMENT_FAILURE         = 'POST_COMMENT_FAILURE'
+export const ADD_BOARD_IMAGE              = 'ADD_BOARD_IMAGE'
+export const ADD_BOARD_WEBSITE            = 'ADD_BOARD_WEBSITE'
 export const ADD_COMMENT_IMAGE            = 'ADD_COMMENT_IMAGE'
 export const ADD_COMMENT_WEBSITE          = 'ADD_COMMENT_WEBSITE'
+export const GET_COMMENTS_SUCCESS         = 'GET_COMMENTS_SUCCESS'
+export const GET_COMMENTS_FAILURE         = 'GET_COMMENTS_FAILURE'
 
 // signup
 export const SIGN_UP_SUCCESS              = 'SIGN_UP_SUCCESS'

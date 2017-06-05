@@ -2,6 +2,7 @@ import { combineReducers } from "redux"
 import { routerReducer } from 'react-router-redux'
 
 // board
+import menu from './menu'
 import message from './message'
 import board_list from './board/list'
 import show_board from './board/show'
@@ -15,6 +16,7 @@ export default combineReducers({
   login: login,
   logout: logout,
   sign_up: sign_up,
+  menu: menu,
   message: message,
   board_list: board_list,
   show_board: show_board,

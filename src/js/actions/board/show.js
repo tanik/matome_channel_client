@@ -68,10 +68,36 @@ export const postCommentAsync = (board_id, name, content) => {
   }
 }
 
+export const addBoardImage = (board_image) => {
+  return { type: type.ADD_BOARD_IMAGE, board_image: board_image }
+}
+
+export const addBoardWebsite = (board_website) => {
+  return { type: type.ADD_BOARD_WEBSITE, board_website: board_website }
+}
+
 export const addCommentImage = (comment_image) => {
   return { type: type.ADD_COMMENT_IMAGE, comment_image: comment_image }
 }
 
 export const addCommentWebsite = (comment_website) => {
   return { type: type.ADD_COMMENT_WEBSITE, comment_website: comment_website }
+}
+
+const getCommentsSuccess = (comments) => {
+  return { type: type.GET_COMMENTS_SUCCESS, comments: comments }
+}
+
+const getCommentsFailure = (error) => {
+  return { type: type.GET_COMMENTS_FAILURE, error: error }
+}
+
+export const getCommentsAsync = (board_id, gt_id, lt_id) => {
+  return dispatch => {
+    return MatomeChannel.Comment.all(board_id, gt_id, lt_id, dispatch).then( (resp) => {
+      dispatch(getCommentsSuccess(resp.data))
+    }).catch( (error) => {
+      dispatch(getCommentsFailure(error))
+    })
+  }
 }

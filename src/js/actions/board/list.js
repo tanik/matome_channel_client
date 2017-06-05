@@ -1,18 +1,27 @@
 import * as type from '../../constants/action_types'
 import { MatomeChannel } from '../../utils/matome_channel'
 
-const getBoards =  (page, per, category_id, boards) => {
-  return { type: type.GET_BOARDS, page: page, per: per, category_id: category_id, boards: boards }
+const getBoards =  (category_id, boards, pagination) => {
+  return {
+    type: type.GET_BOARDS,
+    category_id: category_id,
+    boards: boards,
+    pagination: pagination
+  }
 }
 
-export const getBoardsAsync = (page, per, category_id)  => {
+export const getBoardsAsync = (page, per, category_id, query)  => {
   return dispatch => {
     let params = {page: page, per: per}
+    if(query){
+      params['q'] = query
+    }
     if(category_id > 0) params.category_id = category_id
     return MatomeChannel.Board.all(params, dispatch).then( (resp) => {
-      dispatch(getBoards(page, per, category_id, resp.data))
-    }).catch( () => {
+      dispatch(getBoards(category_id, resp.data.boards, resp.data.pagination))
+    }).catch( (error) => {
       // TODO
+      console.error('getBoardsAsync error', error)
     })
   }
 }
@@ -29,8 +38,9 @@ export const getCategoriesAsync = () => {
   return dispatch => {
     return MatomeChannel.Category.all({}, dispatch).then( (resp) => {
       dispatch(getCategories(resp.data))
-    }).catch( () => {
+    }).catch( (error) => {
       // TODO
+      console.error('getCategoriesAsync error', error)
     })
   }
 }

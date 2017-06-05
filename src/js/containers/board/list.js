@@ -10,8 +10,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getBoards: (page, per, category_id) => {
-      dispatch(getBoardsAsync(page, per, category_id))
+    getBoards: (page, per, category_id, query) => {
+      dispatch(getBoardsAsync(page, per, category_id, query))
     },
     getCategories: () => {
       dispatch(getCategoriesAsync())

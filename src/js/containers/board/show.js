@@ -9,8 +9,11 @@ import {
   changeFavoriteBoard,
   changeFavoriteComment,
   postCommentAsync,
+  addBoardImage,
+  addBoardWebsite,
   addCommentImage,
-  addCommentWebsite
+  addCommentWebsite,
+  getCommentsAsync,
 } from '../../actions/board/show'
 import ShowBoard from '../../components/board/show'
 
@@ -42,11 +45,20 @@ function mapDispatchToProps(dispatch) {
     postComment: (board_id, name, content) => {
       dispatch(postCommentAsync(board_id, name, content))
     },
+    addBoardImage: (board_image) => {
+      dispatch(addBoardImage(board_image))
+    },
+    addBoardWebsite: (board_website) => {
+      dispatch(addBoardWebsite(board_website))
+    },
     addCommentImage: (comment_image) => {
       dispatch(addCommentImage(comment_image))
     },
     addCommentWebsite: (comment_website) => {
       dispatch(addCommentWebsite(comment_website))
+    },
+    getComments: (board_id, gt_id, lt_id) => {
+      dispatch(getCommentsAsync(board_id, gt_id, lt_id))
     },
   }
 }

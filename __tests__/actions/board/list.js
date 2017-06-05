@@ -15,16 +15,27 @@ axios.defaults.host = host;
 axios.defaults.adapter = httpAdapter;
 describe('actions', () => {
   it('should create an action to get boards', () => {
-    const boards = [{title: "test"}]
+    const resp_data = {
+      boards: [{title: "test"}],
+      pagination: {
+        per: 20,
+        total: 1,
+        current: 1,
+        next: null,
+        prev: null,
+      }
+    }
     const page = 1
     const per = 20
     const category_id = 1
     nock(host)
       .get(`/boards?page=${page}&per=${per}&category_id=${category_id}`)
-      .reply(200, boards)
+      .reply(200, resp_data)
     const expectedActions = [{
       type: types.GET_BOARDS,
-      page, per, category_id, boards
+      category_id: category_id,
+      boards: resp_data.boards,
+      pagination: resp_data.pagination
     }]
     const store = mockStore({ boards: [] })
     return store.dispatch(actions.getBoardsAsync(page, per, category_id)).then(() => {
