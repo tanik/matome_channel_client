@@ -5,6 +5,7 @@ import Autolinker from 'autolinker'
 import moment from 'moment'
 import Time from 'react-time'
 import Interweave from 'interweave';
+import AnchorMatcher from '../../utils/interweave/anchor_matcher'
 
 moment.locale('ja')
 
@@ -27,11 +28,11 @@ export default class Comment extends Component {
   }
 
   showCommentDetail(){
-    // TODO
+    this.props.showCommentModal({comment: this.props.comment})
   }
   
   isMyComment(){
-    return(this.props.current_user_id == this.props.comment.user_id)
+    return(this.props.current_user_id && this.props.current_user_id == this.props.comment.user_id)
   }
 
   isMyFavorite(){
@@ -49,8 +50,26 @@ export default class Comment extends Component {
       phone: false,
       stripPrefix: false,
       stripTrailingSlash: false,
-    }).replace(/\r?\n/g, '<br/>');
-    return (<Interweave tagName="div" content={ html } />)
+    }).replace(/\r?\n/g, '<br/>')
+    const anchor_matcher = new AnchorMatcher('anchor', {}, (match, props) => {
+      return(
+        <a key={ Math.random() }
+           data-num={ props.extraProp }
+           onClick={ this.handleClickAnchor.bind(this) }>
+          {match}
+        </a>
+      )
+    })
+    return (<Interweave tagName="div" content={ html } matchers={ [anchor_matcher] }/>)
+  }
+
+  handleClickAnchor(e){
+    e.preventDefault()
+    e.stopPropagation()
+    this.props.showCommentModal({
+      board_id: this.props.comment.board_id,
+      num: e.target.dataset.num
+    })
   }
 
   renderWebsites(){
@@ -85,7 +104,7 @@ export default class Comment extends Component {
 
   render() {
     return(
-      <div className="comment" onClick={ this.showCommentDetail }>
+      <div className="comment" onClick={ this.showCommentDetail.bind(this) }>
         <div className="comment-box">
           <div className="comment-header">
             <div>
@@ -133,4 +152,5 @@ Comment.propTypes = {
   comment: PropTypes.object.isRequired,
   favorite: PropTypes.func.isRequired,
   reply: PropTypes.func.isRequired,
+  showCommentModal: PropTypes.func.isRequired,
 }

@@ -15,6 +15,14 @@ import {
   addCommentWebsite,
   getCommentsAsync,
 } from '../../actions/board/show'
+
+import {
+  changeModalComments,
+  getRelatedCommentsAsync,
+  getCommentsByNumAsync,
+  openCommentModal,
+  changeFavoriteCommentOnModal,
+} from '../../actions/comment/comment_modal'
 import ShowBoard from '../../components/board/show'
 
 
@@ -40,6 +48,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(changeFavoriteBoard(favorite))
     },
     changeFavoriteComment: (favorite) => {
+      dispatch(changeFavoriteCommentOnModal(favorite))
       dispatch(changeFavoriteComment(favorite))
     },
     postComment: (board_id, name, content) => {
@@ -59,6 +68,15 @@ function mapDispatchToProps(dispatch) {
     },
     getComments: (board_id, gt_id, lt_id) => {
       dispatch(getCommentsAsync(board_id, gt_id, lt_id))
+    },
+    showCommentModal: (data) => {
+      dispatch(changeModalComments({}, []))
+      if(data.comment){
+        dispatch(getRelatedCommentsAsync(data.comment))
+      }else{
+        dispatch(getCommentsByNumAsync(data.board_id, data.num))
+      }
+      dispatch(openCommentModal())
     },
   }
 }

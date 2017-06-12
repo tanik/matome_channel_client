@@ -12,7 +12,7 @@ const initialState = {
   post_board_result: {},
 }
 
-export default function board_list_reducer(state = initialState, action) {
+export default (state = initialState, action) => {
   switch(action.type) {
     case action_type.GET_BOARDS: {
       return {

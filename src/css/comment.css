@@ -77,4 +77,13 @@
       }
     }
   }
+  &-modal{
+    &-body{
+      padding: 0 0 10px 0;
+      & .relation-title{
+        padding: 10px 20px;
+        border-bottom: 1px solid var(--borderColor);
+      }
+    }
+  }
 }

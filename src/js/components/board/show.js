@@ -3,11 +3,12 @@ import React, { Component } from 'react'
 import { Grid, Row, Col, Well, Glyphicon, Breadcrumb, Thumbnail, ProgressBar } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 import Gallery from 'react-photo-gallery';
+import InfiniteScroll from 'react-infinite-scroll-component'
 import Comment from '../../components/comment/comment';
 import NewComment from '../../components/comment/new';
 import BoardCable from '../../cable/board'
 import Auth from '../../utils/auth';
-import InfiniteScroll from 'react-infinite-scroll-component'
+import CommentModal from '../../containers/comment/comment_modal';
 
 export default class ShowBoard extends Component {
   constructor(props) {
@@ -120,6 +121,10 @@ export default class ShowBoard extends Component {
     }
   }
 
+  showCommentModal(data){
+    this.props.showCommentModal(data)
+  }
+
   isMyFavorite(){
     const favorite_user_ids = (this.props.board.favorite_user_ids || [])
     return(favorite_user_ids.includes(this.props.board.current_user_id))
@@ -151,6 +156,7 @@ export default class ShowBoard extends Component {
                 comment={comment}
                 favorite={ this.favoriteComment.bind(this) }
                 reply={ this.reply.bind(this) }
+                showCommentModal={ this.showCommentModal.bind(this) }
               />
             )
           })}
@@ -316,6 +322,14 @@ export default class ShowBoard extends Component {
         <NewComment
           postComment={ this.postComment.bind(this) }
           ref={ (ref) => this.new_comment = ref }/>
+        <CommentModal
+          board_id={ this.props.board.id }
+          current_user_id={ this.props.board.current_user_id }
+          comments={ [] }
+          favorite={ this.favoriteComment.bind(this) }
+          reply={ this.reply.bind(this) }
+          showCommentModal={ this.showCommentModal.bind(this) }
+        />
       </div>
     )
   }
@@ -333,4 +347,5 @@ ShowBoard.propTypes = {
   postComment: PropTypes.func.isRequired,
   addCommentImage: PropTypes.func.isRequired,
   addCommentWebsite: PropTypes.func.isRequired,
+  showCommentModal: PropTypes.func.isRequired,
 }

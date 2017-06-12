@@ -127,6 +127,18 @@ MatomeChannel.Comment = class {
     )
   }
 
+  static get_by_num(board_id, num, dispatch){
+    let url
+    url = `/boards/${board_id}/comments/num/${num}`
+    return(
+      Client.request({
+        method: "get",
+        url: url,
+        params: {},
+      }, dispatch)
+    )
+  }
+
   static find(board_id, id, params={}, dispatch){
     return(
       Client.request({
