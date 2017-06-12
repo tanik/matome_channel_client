@@ -1,5 +1,5 @@
 import * as type from '../../constants/action_types'
-import { setErrors } from '../../actions/message'
+import { setNotices, setErrors } from '../../actions/message'
 import { setAuth } from '../../actions/user/auth'
 import { MatomeChannel } from '../../utils/matome_channel'
 
@@ -16,6 +16,7 @@ export const logoutAsync = () => {
     return MatomeChannel.Auth.logout(dispatch).then( () => {
       dispatch(setAuth({}))
       dispatch(logoutSuccess())
+      dispatch(setNotices(["ログアウトしました！"]))
     }).catch( () => {
       let error_messages = ["エラーが発生しました。しばらくお待ちいただいてから再度リトライしてください。"]
       dispatch(logoutFailure())

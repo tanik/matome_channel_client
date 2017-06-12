@@ -1,0 +1,10 @@
+ul.alert{
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  & li{
+    list-style-type: disc;
+    list-style-position: outside;
+  }
+}
+

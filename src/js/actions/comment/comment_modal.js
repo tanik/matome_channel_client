@@ -1,5 +1,6 @@
 import * as type from '../../constants/action_types'
 import { MatomeChannel } from '../../utils/matome_channel'
+import { setErrors } from '../../actions/message'
 
 export const openCommentModal = () => {
   return { type: type.OPEN_COMMENT_MODAL }
@@ -16,8 +17,8 @@ export const getCommentsByNumAsync = (board_id, num) => {
     MatomeChannel.Comment.get_by_num(board_id, num, dispatch).then( (resp) => {
       dispatch(changeModalComments(resp.data.comment, resp.data.related_comments))
     }).catch( (error) => {
-      // TODO
       console.error(error)
+      dispatch(setErrors(["エラーが発生しました。しばらく待ってリトライしてみてください…。"]))
     })
   }
 }
@@ -27,8 +28,8 @@ export const getRelatedCommentsAsync = (comment) => {
     MatomeChannel.Comment.find(comment.board_id, comment.id, {}, dispatch).then( (resp) => {
       dispatch(changeModalComments(resp.data.comment, resp.data.related_comments))
     }).catch( (error) => {
-      // TODO
       console.error(error)
+      dispatch(setErrors(["エラーが発生しました。しばらく待ってリトライしてみてください…。"]))
     })
   }
 }

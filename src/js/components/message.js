@@ -1,55 +1,59 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, {Component} from 'react'
+import AlertContainer from 'react-alert'
 
 export default class Message extends Component {
   constructor(props) {
     super(props)
   }
 
-  componentWillMount() {
+  componentDidUpdate(){
+    this.showNotices()
+    this.showErrors()
   }
 
-  componentWillUnmount(){
-    this.props.clearMessage && this.props.clearMessage()
-  }
-
-  renderNotices() {
+  showNotices() {
     if(this.props.notices && this.props.notices.length > 0 ){
-      return(
-        <div className="alert alert-success" role="alert">
-          <ul>
-            { this.props.notices.map( (notice, i) => <li key={i}>{ notice }</li> ) }
-          </ul>
-        </div>
+      this.msg.success(
+        <ul className="alert">
+          { this.props.notices.map( (notice, i) => <li key={i}>{ notice }</li> ) }
+        </ul>
       )
+      this.props.clearMessages()
     }
   }
 
-  renderErrors() {
+  showErrors() {
     if(this.props.errors && this.props.errors.length > 0 ){
-      return(
-        <div className="alert alert-danger" role="alert">
-          <ul>
-            { this.props.errors.map( (error, i) => <li key={i}>{ error }</li> ) }
-          </ul>
-        </div>
+      this.msg.error(
+        <ul className="alert">
+          { this.props.errors.map( (error, i) => <li key={i}>{ error }</li> ) }
+        </ul>
       )
+      this.props.clearMessages()
     }
   }
+
   render() {
     return(
-      <div className="message-box">
-        { this.renderNotices() }
-        { this.renderErrors() }
+      <div>
+        <AlertContainer
+          ref={ ref => this.msg = ref }
+          offset={ 14 }
+          position={ 'top left' }
+          theme={ 'light' }
+          time={ 5000 }
+          transition={ 'scale' }
+        />
       </div>
     )
   }
 }
 
 Message.propTypes = {
-  notices: PropTypes.array,
-  errors: PropTypes.array,
-  setNotices: PropTypes.func,
-  setErrors: PropTypes.func,
-  clearMessages: PropTypes.func,
+  notices: PropTypes.array.isRequired,
+  errors: PropTypes.array.isRequired,
+  setNotices: PropTypes.func.isRequired,
+  setErrors: PropTypes.func.isRequired,
+  clearMessages: PropTypes.func.isRequired,
 }

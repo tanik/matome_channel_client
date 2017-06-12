@@ -1,5 +1,6 @@
 import * as type from '../../constants/action_types'
 import { MatomeChannel } from '../../utils/matome_channel'
+import { setErrors } from '../../actions/message'
 
 const getBoards =  (category_id, boards, pagination) => {
   return {
@@ -20,8 +21,8 @@ export const getBoardsAsync = (page, per, category_id, query)  => {
     return MatomeChannel.Board.all(params, dispatch).then( (resp) => {
       dispatch(getBoards(category_id, resp.data.boards, resp.data.pagination))
     }).catch( (error) => {
-      // TODO
       console.error('getBoardsAsync error', error)
+      dispatch(setErrors(["エラーが発生しました。しばらく待ってリトライしてみてください…。"]))
     })
   }
 }
@@ -39,8 +40,8 @@ export const getCategoriesAsync = () => {
     return MatomeChannel.Category.all({}, dispatch).then( (resp) => {
       dispatch(getCategories(resp.data))
     }).catch( (error) => {
-      // TODO
       console.error('getCategoriesAsync error', error)
+      dispatch(setErrors(["エラーが発生しました。しばらく待ってリトライしてみてください…。"]))
     })
   }
 }

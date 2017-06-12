@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Well, Grid, FormGroup, FormControl, ControlLabel, Col, Button } from 'react-bootstrap';
-import Message from "../../containers/message";
 import Auth from "../../utils/auth";
 
 export default class SignUp extends Component {
@@ -34,7 +33,6 @@ export default class SignUp extends Component {
         </Well>
         <Grid>
         <form className="form-horizontal" onSubmit={ this.signUp.bind(this) }>
-          <Message />
           <FormGroup validationState={ this.isValid("email") }>
             <Col componentClass={ControlLabel} xs={2}>
               メールアドレス
@@ -67,24 +65,6 @@ export default class SignUp extends Component {
             </Col>
           </FormGroup>
         </form>
-        </Grid>
-      </div>
-    )
-  }
-
-  renderWelcome() {
-    return(
-      <div>
-        <Well>
-          <Grid>
-            <h2>ユーザ登録</h2>
-          </Grid>
-        </Well>
-        <Grid>
-          <Message />
-          <div className="jumbotron">
-            <p>登録ありがとうございます！</p>
-          </div>
         </Grid>
       </div>
     )

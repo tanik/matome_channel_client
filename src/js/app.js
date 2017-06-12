@@ -11,6 +11,7 @@ import Footer from './components/footer'
 
 // connected components
 import Menu from './containers/menu'
+import Message from './containers/message'
 import BoardList from './containers/board/list'
 import ShowBoard from './containers/board/show'
 import SignUp from './containers/user/sign_up'
@@ -40,6 +41,7 @@ render(
     <div>
       <BrowserRouter>
         <div>
+          <Message />
           <Menu />
           <Switch>
             <Route exact path="/" component={Home}/>

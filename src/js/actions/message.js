@@ -8,6 +8,6 @@ export const setErrors = (errors) => {
   return { type: type.SET_ERRORS, errors: errors }
 }
 
-export const clearMessage = () => {
+export const clearMessages = () => {
   return { type: type.CLEAR_MESSAGES }
 }

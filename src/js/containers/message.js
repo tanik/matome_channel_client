@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from "react-router-dom"
 
-import { setNotices, setErrors, clearMessage } from '../actions/message'
+import { setNotices, setErrors, clearMessages } from '../actions/message'
 import Message from '../components/message'
 
 
@@ -17,8 +17,8 @@ function mapDispatchToProps(dispatch) {
     setErrors: (errors) => {
       dispatch(setErrors(errors))
     },
-    clearMessage: () => {
-      dispatch(clearMessage())
+    clearMessages: () => {
+      dispatch(clearMessages())
     },
   }
 }

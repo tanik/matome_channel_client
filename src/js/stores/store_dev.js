@@ -22,7 +22,11 @@ const storage = compose(
 )(adapter(window.localStorage))
 
 export const DevTools = createDevTools(
-  <DockMonitor toggleVisibilityKey="ctrl-h" changePositionKey="ctrl-q">
+  <DockMonitor
+    defaultIsVisible={false}
+    toggleVisibilityKey="ctrl-h"
+    changePositionKey="ctrl-q"
+  >
     <LogMonitor theme="tomorrow" preserveScrollTop={false} />
   </DockMonitor>
 )

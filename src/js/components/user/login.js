@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { Grid, Well, Col, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
-import Message from '../../containers/message';
 import Auth from '../../utils/auth';
 
 export default class Login extends Component {
@@ -37,7 +36,6 @@ export default class Login extends Component {
         </Well>
         <Grid>
         <form className="form-horizontal" onSubmit={ this.login.bind(this) }>
-          <Message />
           <FormGroup validationState={ this.isValid("email") }>
             <Col componentClass={ControlLabel} xs={2}>
               メールアドレス
