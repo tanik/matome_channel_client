@@ -20,6 +20,7 @@ import Logout from './containers/user/logout'
 
 // styles
 import '../css/home.css'
+import '../css/about.css'
 import '../css/menu.css'
 import '../css/message.css'
 import '../css/board.css'

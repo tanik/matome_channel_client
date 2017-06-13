@@ -1,0 +1,24 @@
+.about{
+  margin-bottom: 30px;
+  &-header{
+    text-align: center;
+    font-size: 24px;
+    &-name{
+      margin-top: 30px;
+      margin-bottom: 20px;
+      & strong{
+        font-size: 64px;
+      }
+    }
+  }
+  &-feature{
+    text-align: center;
+    font-size: 18px;
+    &-icon{
+      font-size: 128px;
+    }
+  }
+  &-appeal{
+    margin-top: 200px;
+  }
+}

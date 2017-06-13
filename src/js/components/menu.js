@@ -64,7 +64,9 @@ export default class Menu extends React.Component {
         <Navbar inverse className="menu-top">
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">まとめ＠ちゃんねる</Link>
+              <Link to="/">
+                <div className='list-inline'>まとめ<img src='http://img.m-ch.xyz/statics/icon.png' width='24px'/>ちゃんねる</div>
+              </Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
