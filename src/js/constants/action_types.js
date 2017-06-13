@@ -37,6 +37,10 @@ export const OPEN_COMMENT_MODAL                = 'OPEN_COMMENT_MODAL'
 export const CLOSE_COMMENT_MODAL               = 'CLOSE_COMMENT_MODAL'
 export const CHANGE_FAVORITE_COMMENT_ON_MODAL  = 'CHANGE_FAVORITE_COMMENT_ON_MODAL'
 
+// contact
+export const POST_CONTACT_SUCCESS              = 'POST_CONTACT_SUCCESS'
+export const SET_CONTACT_ERRORS                = 'SET_CONTACT_ERRORS'
+
 // signup
 export const SIGN_UP_SUCCESS                   = 'SIGN_UP_SUCCESS'
 export const SIGN_UP_FAILURE                   = 'SIGN_UP_FAILURE'

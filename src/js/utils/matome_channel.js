@@ -211,3 +211,21 @@ MatomeChannel.Auth = class {
     )
   }
 }
+
+MatomeChannel.Contact = class {
+
+  static create(email, content, dispatch){
+    return(
+      Client.request({
+        method: "post",
+        url: `/contacts`,
+        data: {
+          contact: {
+            email: email,
+            content: content,
+          }
+        },
+      }, dispatch)
+    )
+  }
+}

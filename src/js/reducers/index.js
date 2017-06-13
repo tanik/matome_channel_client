@@ -3,6 +3,7 @@ import { routerReducer } from 'react-router-redux'
 
 import menu from './menu'
 import message from './message'
+import contact from './contact'
 import board_list from './board/list'
 import show_board from './board/show'
 import comment_modal from './comment/comment_modal'
@@ -18,6 +19,7 @@ export default combineReducers({
   sign_up: sign_up,
   menu: menu,
   message: message,
+  contact: contact,
   board_list: board_list,
   show_board: show_board,
   comment_modal: comment_modal,

@@ -14,8 +14,11 @@ export default class Footer extends React.Component {
           <Grid>
             <ol className="breadcrumb">
               <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-              <li className="breadcrumb-item"><Link to="/inquiry">問い合わせ</Link></li>
-              <li className="breadcrumb-item"><Link to="/about">About</Link></li>
+              <li className="breadcrumb-item"><Link to="/contact">問い合わせ</Link></li>
+              <li className="breadcrumb-item"><Link to="/about">まとめちゃんねるについて</Link></li>
+              <li className="breadcrumb-item">
+                <a href='https://github.com/tanik' target='_BLANK'>github</a>
+              </li>
             </ol>
           </Grid>
         </Well>
