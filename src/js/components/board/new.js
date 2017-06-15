@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Modal, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
 
 export default class NewBoard extends Component {
   constructor(props) {
@@ -8,15 +9,6 @@ export default class NewBoard extends Component {
   }
 
   componentWillMount() {
-    this.setState({show: false})
-  }
-
-  open(){
-    this.setState({show: true})
-  }
-
-  close(){
-    this.setState({show: false})
   }
 
   post(e){
@@ -28,12 +20,12 @@ export default class NewBoard extends Component {
     if(title.length == 0 || content.length == 0){
       return
     }
-    this.props.post(category_id, title,  name, content)
+    this.props.postBoard(category_id, title,  name, content)
   }
 
-  render() {
+  renderModal(){
     return(
-      <Modal show={ this.state.show } onHide={ this.close.bind(this) }>
+      <Modal show={ this.props.show } onHide={ this.props.closeNewBoardModal }>
         <Modal.Header closeButton>
           <Modal.Title>スレッド作成</Modal.Title>
         </Modal.Header>
@@ -44,7 +36,7 @@ export default class NewBoard extends Component {
               <FormControl componentClass="select"
                 placeholder="カテゴリ"
                 inputRef={ ref => { this.board_category = ref }}>
-                { this.props.getCategories().map( (category) => {
+                { this.props.categories.map( (category) => {
                   return(<option key={category.id} value={ category.id }>{ category.nested_name }</option>)
                 })}
               </FormControl>
@@ -74,14 +66,26 @@ export default class NewBoard extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={ this.post.bind(this) } bsStyle="primary">投稿する</Button>
-          <Button onClick={ this.close.bind(this) }>閉じる</Button>
+          <Button onClick={ this.props.closeNewBoardModal }>閉じる</Button>
         </Modal.Footer>
       </Modal>
     )
   }
+
+  render() {
+    if(this.props.post_board_result.state == "success"){
+      return(<Redirect to={`/boards/${this.props.post_board_result.response.id}`} />)
+    }else{
+      return(this.renderModal())
+    }
+  }
 }
 
 NewBoard.propTypes = {
-  getCategories: PropTypes.func.isRequired,
-  post: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
+  categories: PropTypes.array.isRequired,
+  post_board_result: PropTypes.object.isRequired,
+  postBoard: PropTypes.func.isRequired,
+  openNewBoardModal: PropTypes.func.isRequired,
+  closeNewBoardModal: PropTypes.func.isRequired,
 }

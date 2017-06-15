@@ -1,4 +1,8 @@
 export default class Auth {
+  static currentUserId(){
+    return(this.info().user_id)
+  }
+
   static info(){
     const auth_info = window.localStorage.getItem("auth")
     if(auth_info){

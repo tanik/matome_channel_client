@@ -64,6 +64,7 @@ export const postCommentAsync = (board_id, name, content) => {
     return MatomeChannel.Comment.create(board_id, name, content, dispatch).then( (resp) => {
       dispatch(postCommentSuccess(resp.data))
     }).catch( (error) => {
+      console.error(error)
       dispatch(postCommentFailure(error))
       dispatch(setErrors(["エラーが発生しました。しばらく待ってリトライしてみてください…。"]))
     })
@@ -90,16 +91,43 @@ const getCommentsSuccess = (comments) => {
   return { type: type.GET_COMMENTS_SUCCESS, comments: comments }
 }
 
-const getCommentsFailure = (error) => {
-  return { type: type.GET_COMMENTS_FAILURE, error: error }
-}
 
 export const getCommentsAsync = (board_id, gt_id, lt_id) => {
   return dispatch => {
     return MatomeChannel.Comment.all(board_id, gt_id, lt_id, dispatch).then( (resp) => {
       dispatch(getCommentsSuccess(resp.data))
     }).catch( (error) => {
-      dispatch(getCommentsFailure(error))
+      console.error(error)
+      dispatch(setErrors(["エラーが発生しました。しばらく待ってリトライしてみてください…。"]))
+    })
+  }
+}
+
+const getWebsitesSuccess = (websites) => {
+  return { type: type.GET_WEBSITES_SUCCESS, websites: websites }
+}
+
+export const getWebsitesAsync = (board_id, gt_id, lt_id) => {
+  return dispatch => {
+    return MatomeChannel.Board.websites(board_id, gt_id, lt_id, dispatch).then( (resp) => {
+      dispatch(getWebsitesSuccess(resp.data))
+    }).catch( (error) => {
+      console.error(error)
+      dispatch(setErrors(["エラーが発生しました。しばらく待ってリトライしてみてください…。"]))
+    })
+  }
+}
+
+const getImagesSuccess = (images) => {
+  return { type: type.GET_IMAGES_SUCCESS, images: images }
+}
+
+export const getImagesAsync = (board_id, gt_id, lt_id) => {
+  return dispatch => {
+    return MatomeChannel.Board.images(board_id, gt_id, lt_id, dispatch).then( (resp) => {
+      dispatch(getImagesSuccess(resp.data))
+    }).catch( (error) => {
+      console.error(error)
       dispatch(setErrors(["エラーが発生しました。しばらく待ってリトライしてみてください…。"]))
     })
   }

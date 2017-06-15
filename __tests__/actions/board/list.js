@@ -42,28 +42,5 @@ describe('actions', () => {
       expect(store.getActions()).toEqual(expectedActions)
     })
   })
-  it('should create an action to get category list async', () => {
-    const categories = [{name: "test"}]
-    nock(host)
-      .get('/categories')
-      .reply(200, categories)
-    const expectedActions = [{
-      type: types.GET_CATEGORIES,
-      categories
-    }]
-    const store = mockStore({ categories: [] })
-    return store.dispatch(actions.getCategoriesAsync()).then(() => {
-      expect(store.getActions()).toEqual(expectedActions)
-    })
-  })
-
-  it('should create an action to change category', () => {
-    const category_id = 1
-    const expectedAction = {
-      type: types.CHANGE_CATEGORY,
-      category_id
-    }
-    expect(actions.changeCategory(category_id)).toEqual(expectedAction)
-  })
 })
 

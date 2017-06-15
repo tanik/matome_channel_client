@@ -65,6 +65,46 @@ MatomeChannel.Board = class {
     )
   }
 
+  static websites(board_id, gt_id, lt_id, dispatch){
+    let url
+    if(gt_id && lt_id){
+      url = `/boards/${board_id}/websites/gtlt/${gt_id}/${lt_id}`
+    }else if(gt_id){
+      url = `/boards/${board_id}/websites/gt/${gt_id}`
+    }else if(lt_id){
+      url = `/boards/${board_id}/websites/lt/${lt_id}`
+    }else{
+      url = `/boards/${board_id}/websites`
+    }
+    return(
+      Client.request({
+        method: "get",
+        url: url,
+        params: {},
+      }, dispatch)
+    )
+  }
+
+  static images(board_id, gt_id, lt_id, dispatch){
+    let url
+    if(gt_id && lt_id){
+      url = `/boards/${board_id}/images/gtlt/${gt_id}/${lt_id}`
+    }else if(gt_id){
+      url = `/boards/${board_id}/images/gt/${gt_id}`
+    }else if(lt_id){
+      url = `/boards/${board_id}/images/lt/${lt_id}`
+    }else{
+      url = `/boards/${board_id}/images`
+    }
+    return(
+      Client.request({
+        method: "get",
+        url: url,
+        params: {},
+      }, dispatch)
+    )
+  }
+
   static find(id, params={}, dispatch){
     return(
       Client.request({
@@ -118,6 +158,18 @@ MatomeChannel.Comment = class {
     }else{
       url = `/boards/${board_id}/comments`
     }
+    return(
+      Client.request({
+        method: "get",
+        url: url,
+        params: {},
+      }, dispatch)
+    )
+  }
+
+  static popular(category_id, dispatch){
+    let url = `/comments/popular`
+    if(category_id > 0) url = `${url}?category_id=${category_id}`
     return(
       Client.request({
         method: "get",
@@ -225,6 +277,18 @@ MatomeChannel.Contact = class {
             content: content,
           }
         },
+      }, dispatch)
+    )
+  }
+}
+
+MatomeChannel.User = class {
+  static mypage(dispatch){
+    return(
+      Client.request({
+        method: "get",
+        url: '/my',
+        params: {},
       }, dispatch)
     )
   }

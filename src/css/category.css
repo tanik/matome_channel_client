@@ -1,0 +1,18 @@
+.category{
+  &-root{
+    margin-bottom: 0px;
+    border-radius: 0px;
+    border: 0px;
+  }
+  &-child{
+    & .parent{
+      font-size: 16px;
+      margin-right: 5px;
+    }
+    margin-bottom: 20px;
+    & .breadcrumb{
+      margin-bottom: 0px;
+      background-color: #fff;
+    }
+  }
+}

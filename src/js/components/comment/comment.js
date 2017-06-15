@@ -6,6 +6,7 @@ import moment from 'moment'
 import Time from 'react-time'
 import Interweave from 'interweave';
 import AnchorMatcher from '../../utils/interweave/anchor_matcher'
+import Auth from '../../utils/auth'
 
 moment.locale('ja')
 
@@ -32,11 +33,72 @@ export default class Comment extends Component {
   }
   
   isMyComment(){
-    return(this.props.current_user_id && this.props.current_user_id == this.props.comment.user_id)
+    const current_user_id = Auth.currentUserId()
+    return(current_user_id && current_user_id == this.props.comment.user_id)
   }
 
   isMyFavorite(){
-    return(this.props.comment.favorite_user_ids.includes(this.props.current_user_id))
+    return(this.props.comment.favorite_user_ids.includes(Auth.currentUserId()))
+  }
+
+  isShow(attr){
+    const opt = this.props.showOptions
+    if(!opt){
+      return(true)
+    }else{
+     return(opt[attr] == true)
+    }
+  }
+
+
+  handleClickAnchor(e){
+    e.preventDefault()
+    e.stopPropagation()
+    this.props.showCommentModal({
+      board_id: this.props.comment.board_id,
+      num: e.target.dataset.num
+    })
+  }
+
+  renderNum(){
+    if(this.isShow('num')){
+      return(
+        <span className="comment-header-num">
+          <strong>{ this.props.comment.num }</strong>
+        </span>
+      )
+    }
+  }
+
+  renderName(){
+    if(this.isShow('name')){
+      return(
+        <span className="comment-header-name">
+          <strong>{ this.isMyComment() ? "あなたです！" : this.props.comment.name }</strong>
+        </span>
+      )
+    }
+  }
+
+  renderCreatedAt(){
+    if(this.isShow('created_at')){
+      return(
+        <span className="comment-header-created_at">
+          <Time value={ new Date(this.props.comment.created_at) }
+            format="YYYY[年]MM[月]DD[日] (dddd) HH:mm:ss"/>
+        </span>
+      )
+    }
+  }
+
+  renderHashId(){
+    if(this.isShow('hash_id')){
+      return(
+        <span className="comment-header-hash_id">
+          ID: { this.props.comment.hash_id }
+        </span>
+      )
+    }
   }
 
   renderContent(){
@@ -63,43 +125,58 @@ export default class Comment extends Component {
     return (<Interweave tagName="div" content={ html } matchers={ [anchor_matcher] }/>)
   }
 
-  handleClickAnchor(e){
-    e.preventDefault()
-    e.stopPropagation()
-    this.props.showCommentModal({
-      board_id: this.props.comment.board_id,
-      num: e.target.dataset.num
-    })
-  }
-
   renderWebsites(){
-    return (
-      <ul className="comment-image-list list-inline">
-      { this.props.comment.websites.map( (website) => {
-          return(
-            <li key={ `website-${website.id}` }>
-              <Thumbnail target="_BLANK" href={ website.full_url } src={ website.thumbnail_url } />
-            </li>
-          )
-        })
-      }
-      </ul>
-    )
+    if(this.isShow('websites')){
+      return (
+        <ul className="comment-image-list list-inline">
+        { this.props.comment.websites.map( (website) => {
+            return(
+              <li key={ `website-${website.id}` }>
+                <Thumbnail target="_BLANK" href={ website.full_url } src={ website.thumbnail_url } />
+              </li>
+            )
+          })
+        }
+        </ul>
+      )
+    }
   }
 
   renderImages(){
-    return (
-      <ul className="comment-image-list list-inline">
-      { this.props.comment.images.map( (image) => {
-          return(
-            <li key={ `image-${image.id}` }>
-              <Thumbnail target="_BLANK" href={ image.full_url } src={ image.thumbnail_url } />
-            </li>
-          )
-        })
-      }
-      </ul>
-    )
+    if(this.isShow('images')){
+      return (
+        <ul className="comment-image-list list-inline">
+        { this.props.comment.images.map( (image) => {
+            return(
+              <li key={ `image-${image.id}` }>
+                <Thumbnail target="_BLANK" href={ image.full_url } src={ image.thumbnail_url } />
+              </li>
+            )
+          })
+        }
+        </ul>
+      )
+    }
+  }
+
+  renderToolBox(){
+    if(this.isShow('toolbox')){
+      return(
+        <ul className="comment-tools list-inline">
+          <li className="comment-tools-reply">
+            <button onClick={ this.reply.bind(this) }>
+              <Glyphicon glyph="share-alt" />
+            </button>
+          </li>
+          <li className={ this.isMyFavorite() ? "comment-tools-favorite  my-favorite" : "comment-tools-favorite" }>
+            <button onClick={ this.favorite.bind(this) }>
+              <Glyphicon glyph="heart" />
+              <span className="button-text">{ this.props.comment.favorite_user_ids.length }</span>
+            </button>
+          </li>
+        </ul>
+      )
+    }
   }
 
   render() {
@@ -108,19 +185,10 @@ export default class Comment extends Component {
         <div className="comment-box">
           <div className="comment-header">
             <div>
-              <span className="comment-header-num">
-                <strong>{ this.props.comment.num }</strong>
-              </span>
-              <span className="comment-header-name">
-                <strong>{ this.isMyComment() ? "あなたです！" : this.props.comment.name }</strong>
-              </span>
-              <span className="comment-header-created_at">
-                <Time value={ new Date(this.props.comment.created_at) }
-                  format="YYYY[年]MM[月]DD[日] (dddd) HH:mm:ss"/>
-              </span>
-              <span className="comment-header-hash_id">
-                ID: { this.props.comment.hash_id }
-              </span>
+              { this.renderNum() }
+              { this.renderName() }
+              { this.renderCreatedAt() }
+              { this.renderHashId() }
             </div>
           </div>
           <div className="comment-body">
@@ -128,19 +196,7 @@ export default class Comment extends Component {
             { this.renderWebsites() }
             { this.renderImages() }
           </div>
-          <ul className="comment-tools list-inline">
-            <li className="comment-tools-reply">
-              <button onClick={ this.reply.bind(this) }>
-                <Glyphicon glyph="share-alt" />
-              </button>
-            </li>
-            <li className={ this.isMyFavorite() ? "comment-tools-favorite  my-favorite" : "comment-tools-favorite" }>
-              <button onClick={ this.favorite.bind(this) }>
-                <Glyphicon glyph="heart" />
-                <span className="button-text">{ this.props.comment.favorite_user_ids.length }</span>
-              </button>
-            </li>
-          </ul>
+          { this.renderToolBox() }
         </div>
       </div>
     )
@@ -148,7 +204,7 @@ export default class Comment extends Component {
 }
 
 Comment.propTypes = {
-  current_user_id: PropTypes.number,
+  showOptions: PropTypes.object,
   comment: PropTypes.object.isRequired,
   favorite: PropTypes.func.isRequired,
   reply: PropTypes.func.isRequired,

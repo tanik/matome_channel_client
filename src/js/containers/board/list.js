@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import { withRouter } from "react-router-dom"
 
-import { getBoardsAsync, getCategoriesAsync, changeCategory, postBoardAsync } from '../../actions/board/list'
+import { getBoardsAsync } from '../../actions/board/list'
+import { openNewBoardModal } from '../../actions/board/new'
 import BoardList from '../../components/board/list'
 
 function mapStateToProps(state) {
@@ -13,15 +14,9 @@ function mapDispatchToProps(dispatch) {
     getBoards: (page, per, category_id, query) => {
       dispatch(getBoardsAsync(page, per, category_id, query))
     },
-    getCategories: () => {
-      dispatch(getCategoriesAsync())
-    },
-    changeCategory: (category_id) => {
-      dispatch(changeCategory(category_id))
-    },
-    postBoard: (category_id, title,  name, content) => {
-      dispatch(postBoardAsync(category_id, title,  name, content))
-    },
+    openNewBoardModal: () => {
+      dispatch(openNewBoardModal())
+    }
   }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BoardList))

@@ -45,7 +45,7 @@ export default class Footer extends React.Component {
             <Col xs={6}>
               <Glyphicon glyph='globe' className='about-feature-icon'/>
               <p>WEBサイトのURLから魚拓(画像)を作る</p>
-              <p>WEBサイトをまとめる。</p>
+              <p>WEBサイトをまとめる</p>
             </Col>
           </Row>
           <hr />

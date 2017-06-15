@@ -13,7 +13,6 @@ export default class CommentModal extends Component {
       return(
         <div>
           <Comment key={this.props.comment.id}
-            current_user_id={ this.props.current_user_id }
             comment={this.props.comment}
             favorite={ this.props.favorite.bind(this) }
             reply={ this.props.reply.bind(this) }
@@ -22,7 +21,6 @@ export default class CommentModal extends Component {
           <div className='relation-title'>関連レス</div>
           { this.props.related_comments.map( (comment) =>
             <Comment key={comment.id}
-              current_user_id={ this.props.current_user_id }
               comment={ comment }
               favorite={ this.props.favorite.bind(this) }
               reply={ this.props.reply.bind(this) }
@@ -61,7 +59,6 @@ CommentModal.propTypes = {
   getCommentsByNumAsync: PropTypes.func.isRequired,
   // not redux props
   board_id: PropTypes.number,
-  current_user_id: PropTypes.number,
   favorite: PropTypes.func.isRequired,
   reply: PropTypes.func.isRequired,
   showCommentModal: PropTypes.func.isRequired,

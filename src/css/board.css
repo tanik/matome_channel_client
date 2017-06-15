@@ -20,7 +20,11 @@
       margin-bottom: 5px;
     }
   }
+  & .comment{
+    border: 1px solid var(--borderColor);
+  }
 }
+
 .board{
   &-title{
     margin-top: 0px;
@@ -95,25 +99,9 @@
           padding-left: 10px;
           padding-right: 10px;
           & li{
-            max-width: 260px;
+            max-width: 230px;
           }
         }
-      }
-    }
-  }
-  &-category{
-    &-root{
-      & nav{
-        margin-bottom: 0px;
-        border-radius: 0px;
-        border: 0px;
-      }
-    }
-    &-child{
-      margin-bottom: 20px;
-      & .breadcrumb{
-        margin-bottom: 0px;
-        background-color: #fff;
       }
     }
   }

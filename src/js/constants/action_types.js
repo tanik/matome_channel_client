@@ -8,13 +8,27 @@ export const SET_NOTICES                       = 'SET_NOTICES'
 export const SET_ERRORS                        = 'SET_ERRORS'
 export const CLEAR_MESSAGES                    = 'CLEAR_MESSAGES'
 
-// board
+// guest home
+export const GET_POPULAR_BOARDS                = 'GET_POPULAR_BOARDS'
+export const GET_POPULAR_COMMENTS              = 'GET_POPULAR_COMMENTS'
+// user home
+export const GET_MYPAGE_INFO                   = 'GET_MYPAGE_INFO'
+export const SET_MYPAGE_LOADING                = 'SET_MYPAGE_LOADING'
+
+// category
 export const GET_CATEGORIES                    = 'GET_CATEGORIES'
 export const CHANGE_CATEGORY                   = 'CHANGE_CATEGORY'
+
+// board list
 export const GET_BOARDS                        = 'GET_BOARDS'
 export const GET_BOARD                         = 'GET_BOARD'
+// board new
+export const SET_NEW_BOARD_CATEGORIES          = 'SET_NEW_BOARD_CATEGORIES'
+export const OPEN_NEW_BOARD_MODAL              = 'OPEN_NEW_BOARD_MODAL'
+export const CLOSE_NEW_BOARD_MODAL             = 'CLOSE_NEW_BOARD_MODAL'
 export const POST_BOARD_SUCCESS                = 'POST_BOARD_SUCCESS'
 export const POST_BOARD_FAILURE                = 'POST_BOARD_FAILURE'
+// board show
 export const ADD_COMMENT                       = 'ADD_COMMENT'
 export const CHANGE_FAVORITE_BOARD             = 'CHANGE_FAVORITE_BOARD'
 export const CHANGE_FAVORITE_COMMENT           = 'CHANGE_FAVORITE_COMMENT'
@@ -29,7 +43,8 @@ export const ADD_BOARD_WEBSITE                 = 'ADD_BOARD_WEBSITE'
 export const ADD_COMMENT_IMAGE                 = 'ADD_COMMENT_IMAGE'
 export const ADD_COMMENT_WEBSITE               = 'ADD_COMMENT_WEBSITE'
 export const GET_COMMENTS_SUCCESS              = 'GET_COMMENTS_SUCCESS'
-export const GET_COMMENTS_FAILURE              = 'GET_COMMENTS_FAILURE'
+export const GET_WEBSITES_SUCCESS              = 'GET_WEBSITES_SUCCESS'
+export const GET_IMAGES_SUCCESS                = 'GET_IMAGES_SUCCESS'
 
 // comment
 export const CHANGE_MODAL_COMMENTS             = 'CHANGE_MODAL_COMMENTS'

@@ -127,7 +127,7 @@ export default class ShowBoard extends Component {
 
   isMyFavorite(){
     const favorite_user_ids = (this.props.board.favorite_user_ids || [])
-    return(favorite_user_ids.includes(this.props.board.current_user_id))
+    return(favorite_user_ids.includes(Auth.currentUserId()))
   }
 
   getMoreComment(){
@@ -136,6 +136,24 @@ export default class ShowBoard extends Component {
     const last_comment = comments[comments.length-1]
     if( last_comment ){
       this.props.getComments(board_id, undefined, last_comment.id)
+    }
+  }
+
+  getMoreWebsites(){
+    const board_id = this.getID()
+    const websites = this.props.board.websites || []
+    const last_website = websites[websites.length-1]
+    if( last_website ){
+      this.props.getWebsites(board_id, undefined, last_website.id)
+    }
+  }
+
+  getMoreImages(){
+    const board_id = this.getID()
+    const images = this.props.board.images || []
+    const last_image = images[images.length-1]
+    if( last_image ){
+      this.props.getImages(board_id, undefined, last_image.id)
     }
   }
 
@@ -148,11 +166,10 @@ export default class ShowBoard extends Component {
           next={ this.getMoreComment.bind(this) }
           hasMore={ hasMore }
           loader={ <ProgressBar active now={100} /> }
-          endMessage={ <div></div> } >
+          endMessage={ "-" } >
           { comments.map( comment => {
             return(
               <Comment key={comment.id}
-                current_user_id={ this.props.board.current_user_id }
                 comment={comment}
                 favorite={ this.favoriteComment.bind(this) }
                 reply={ this.reply.bind(this) }
@@ -170,16 +187,22 @@ export default class ShowBoard extends Component {
   renderWebsites(){
     const websites = (this.props.board.websites || [])
     return(
-      <ul className="list-inline">
-      {websites.map( website => {
-        return(
-          <li key={ `website-${website.id}` }>
-            <h5><Link to={ website.website.original_url }>{ website.website.title }</Link></h5>
-            <Thumbnail target="_BLANK" href={website.website.full_url} src={website.website.thumbnail_url} />
-          </li>
-        )
-      }) }
-      </ul>
+      <InfiniteScroll
+        next={ this.getMoreWebsites.bind(this) }
+        hasMore={ this.props.has_more_websites }
+        loader={ <ProgressBar active now={100} /> }
+        endMessage={ "-" } >
+        <ul className="list-inline">
+        {websites.map( website => {
+          return(
+            <li key={ `website-${website.id}` }>
+              <h5><Link to={ website.website.original_url }>{ website.website.title }</Link></h5>
+              <Thumbnail target="_BLANK" href={website.website.full_url} src={website.website.thumbnail_url} />
+            </li>
+          )
+        }) }
+        </ul>
+      </InfiniteScroll>
     )
   }
 
@@ -196,11 +219,17 @@ export default class ShowBoard extends Component {
       })
     })
     return(
-      <Gallery
-        photos={photo_sets}
-        margin={1}
-        cols={4}
-        onClickPhoto={this.openImage.bind(this)}/>
+      <InfiniteScroll
+        next={ this.getMoreImages.bind(this) }
+        hasMore={ this.props.has_more_images }
+        loader={ <ProgressBar active now={100} /> }
+        endMessage={ "-" } >
+        <Gallery
+          photos={photo_sets}
+          margin={1}
+          cols={4}
+          onClickPhoto={this.openImage.bind(this)}/>
+      </InfiniteScroll>
     )
   }
 
@@ -307,14 +336,9 @@ export default class ShowBoard extends Component {
         </Well>
         <Grid>
           <Row>
-            <Col xs={9}>
+            <Col>
               <div className="board-show-body">
                 { this.renderContent() }
-              </div>
-            </Col>
-            <Col xs={3}>
-              <div className='board-show-sidemenu'>
-                Side Menu そのうち作る。
               </div>
             </Col>
           </Row>
@@ -324,7 +348,6 @@ export default class ShowBoard extends Component {
           ref={ (ref) => this.new_comment = ref }/>
         <CommentModal
           board_id={ this.props.board.id }
-          current_user_id={ this.props.board.current_user_id }
           comments={ [] }
           favorite={ this.favoriteComment.bind(this) }
           reply={ this.reply.bind(this) }
@@ -337,9 +360,13 @@ export default class ShowBoard extends Component {
 
 ShowBoard.propTypes = {
   board: PropTypes.object.isRequired,
+  has_more_websites: PropTypes.bool.isRequired,
+  has_more_images: PropTypes.bool.isRequired,
   post_comment_result: PropTypes.object.isRequired,
   getBoard: PropTypes.func.isRequired,
   getComments: PropTypes.func.isRequired,
+  getWebsites: PropTypes.func.isRequired,
+  getImages: PropTypes.func.isRequired,
   setFavoriteBoard: PropTypes.func.isRequired,
   setFavoriteComment: PropTypes.func.isRequired,
   changeFavoriteBoard: PropTypes.func.isRequired,

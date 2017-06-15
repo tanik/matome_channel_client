@@ -13,12 +13,12 @@ export default class Board extends Component {
       <Well bsSize="sm" className="">
         <Grid>
           <Row>
-            <Col xs={2}>
+            <Col xs={12} sm={3}>
               <Link to={ `/boards/${ this.props.board.id }` } title={ this.props.board.title } >
                 <Thumbnail src={ this.props.board.thumbnail_url } />
               </Link>
             </Col>
-            <Col className='board' xs={10}>
+            <Col className='board' xs={12} sm={8}>
               <div className="header">
                 <span className="score" title="スコア">
                   <Glyphicon glyph='star' className='icon-white' />
@@ -36,7 +36,17 @@ export default class Board extends Component {
               <h3 className="title">
               <Link to={ `/boards/${ this.props.board.id }` } title={ this.props.board.title }>{ this.props.board.title }</Link>
               </h3>
-              <p className='first-comment'>{ this.props.board.first_comment }</p>
+              <div className='first-comment'>
+                {
+                  (() => {
+                    if(this.props.content){
+                      return(this.props.content)
+                    }else{
+                      return(this.props.board.first_comment)
+                    }
+                  })()
+                }
+              </div>
             </Col>
           </Row>
         </Grid>
@@ -46,5 +56,6 @@ export default class Board extends Component {
 }
 
 Board.propTypes = {
-  board: PropTypes.object.isRequired
+  board: PropTypes.object.isRequired,
+  content: PropTypes.object
 }

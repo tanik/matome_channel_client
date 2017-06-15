@@ -1,3 +1,49 @@
 .home{
-  margin-top: 20px;
+  &-header{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-radius: 0px;
+    border-bottom: 0px;
+    display: flex;
+  }
+  &-body{
+    &-title{
+      margin-bottom: 30px ;
+      position: relative;
+      text-align: center;
+      & h3{
+        display: inline-block;
+        background-color: var(--bgColor);
+        padding: 0 15px;
+        font-size: 24px;
+        margin-top: 5px;
+      }
+      &:before{
+        height: 1px;
+        background-color: var(--borderColor);
+        content: '';
+        position: absolute;
+        top: 45%;
+        left: 0;
+        right: 0;
+        z-index: -1;
+      }
+    }
+    & .board-list{
+      margin-bottom: 30px;
+    }
+  }
+  &-user{
+    &-body{
+      margin-top: 10px;
+    }
+    &-timeline{
+      margin-top: -20px;
+    }
+    &-histories{
+      list-style-type: decimal;
+      list-style-position: outside;
+      padding-left: 15px;
+    }
+  }
 }

@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import CategoryList from '../../components/board/category_list'
+import CategoryList from '../../containers/category/list'
 import Board from '../../components/board/board'
-import NewBoard from '../../components/board/new'
+import NewBoard from '../../containers/board/new'
 import { Grid, Well, Pagination, Glyphicon } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom'
-
 
 export default class BoardList extends Component {
   constructor(props) {
@@ -13,16 +11,15 @@ export default class BoardList extends Component {
   }
 
   componentWillMount() {
-    this.props.changeCategory(this.selectedCategoryID())
-    this.props.getCategories()
     this.getBoards()
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.location.pathname.match(/\/boards\/\d+/)) {
-      this.props.history.push(this.selectedCategoryID())
-    } else if (prevProps.location.pathname !== this.props.location.pathname) {
-      this.props.changeCategory(this.selectedCategoryID())
+    // 我ながらなんの処理でいれたのか謎、なんかおかしい気がするのでコメントアウトしとく。
+    //if (this.props.location.pathname.match(/\/boards\/\d+/)) {
+    //  this.props.history.push(this.selectedCategoryID())
+    //} else if (prevProps.location.pathname !== this.props.location.pathname) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
       this.getBoards(1)
     }
   }
@@ -41,37 +38,18 @@ export default class BoardList extends Component {
     }
   }
 
-  categories() {
-    return( this.props.categories || [])
-  }
-
-  selectedCategory(){
-    let selected_id = this.selectedCategoryID()
-    return(this.props.categories.find( category => {
-      return(category.id == selected_id)
-    }))
-  }
-
-  openNewBoardDialog() {
-    this.new_board_dialog.open()
-  }
-
-  post(category_id, title,  name, content){
-    this.props.postBoard(category_id, title,  name, content)
-  }
-
   changePage(page){
     this.getBoards(page)
   }
 
-  renderBoardList(){
+  render(){
     return(
       <div>
         <Well className="board-title">
           <Grid>
             <div className="board-tool-box pull-right">
               <button className="new-button"
-                onClick={ this.openNewBoardDialog.bind(this) }
+                onClick={ this.props.openNewBoardModal }
                 title="新規スレッド">
                 <Glyphicon glyph="pencil" />
                 <span className="button-text">新規スレッド</span>
@@ -81,8 +59,7 @@ export default class BoardList extends Component {
           </Grid>
         </Well>
         <CategoryList
-          getCategories={ this.categories.bind(this) }
-          selectedCategory={ this.selectedCategory.bind(this) }
+          url_suffix={ '/boards' }
         />
         <Grid className='board-list'>
           { this.props.boards.map( board =>
@@ -99,21 +76,9 @@ export default class BoardList extends Component {
             activePage={ this.props.page }
             onSelect={ this.changePage.bind(this) } />
         </Grid>
-        <NewBoard
-          getCategories={ this.categories.bind(this) }
-          post={ this.post.bind(this) }
-          ref={ (ref) => this.new_board_dialog = ref }
-        />
+        <NewBoard />
       </div>
     )
-  }
-
-  render() {
-    if(this.props.post_board_result.state == "success"){
-      return(<Redirect to={`/boards/${this.props.post_board_result.response.id}`} />)
-    }else{
-      return(this.renderBoardList())
-    }
   }
 }
 
@@ -124,10 +89,6 @@ BoardList.propTypes = {
   total_page: PropTypes.number.isRequired,
   next_page: PropTypes.number,
   prev_page: PropTypes.number,
-  categories: PropTypes.array.isRequired,
-  selected_category_id: PropTypes.number.isRequired,
-  post_board_result: PropTypes.object.isRequired,
-  getCategories: PropTypes.func.isRequired,
   getBoards: PropTypes.func.isRequired,
-  postBoard: PropTypes.func.isRequired,
+  openNewBoardModal: PropTypes.func.isRequired,
 }

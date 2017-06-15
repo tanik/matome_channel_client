@@ -5,7 +5,12 @@ describe('category list reducer', () => {
   it('should return the initial state', () => {
     expect(
       reducer(undefined, {})
-    ).toEqual({board: {}, post_comment_result: {}})
+    ).toEqual({
+      board: {},
+      has_more_images: false,
+      has_more_websites: false,
+      post_comment_result: {},
+    })
   })
 
   it('should handle GET_BOARD', () => {
@@ -17,16 +22,19 @@ describe('category list reducer', () => {
       res_count: 1,
       score: 20,
       thumbnail_url: "/images/placeholder.png",
-      current_user_id: 1,
       comments: [{content: "comment"}],
+      images: [],
+      websites: [],
     }
+    const has_more_images = false
+    const has_more_websites = false
     const post_comment_result = {}
-    const prevState = {board, post_comment_result}
+    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
     expect(
       reducer(prevState, {
         type: types.GET_BOARD, board
       })
-    ).toEqual({board, post_comment_result})
+    ).toEqual({board, has_more_images, has_more_websites, post_comment_result})
   })
 
   it('should handle ADD_COMMENT', () => {
@@ -38,11 +46,12 @@ describe('category list reducer', () => {
       res_count: 1,
       score: 20,
       thumbnail_url: "/images/placeholder.png",
-      current_user_id: 1,
       comments: [{content: "comment"}],
     }
     const post_comment_result = {}
-    const prevState = {board, post_comment_result}
+    const has_more_images = false
+    const has_more_websites = false
+    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
     const comment = {content: "comment2"} 
     expect(
       reducer(prevState, {
@@ -57,9 +66,10 @@ describe('category list reducer', () => {
         res_count: 1,
         score: 20,
         thumbnail_url: "/images/placeholder.png",
-        current_user_id: 1,
         comments: [{content: "comment2"}, {content: "comment"}],
       },
+      has_more_images,
+      has_more_websites,
       post_comment_result
     })
   })
@@ -73,11 +83,12 @@ describe('category list reducer', () => {
       res_count: 1,
       score: 20,
       thumbnail_url: "/images/placeholder.png",
-      current_user_id: 1,
       comments: [{id: 1, content: "comment", favorite_user_ids: []}],
     }
     const post_comment_result = {}
-    const prevState = {board, post_comment_result}
+    const has_more_images = false
+    const has_more_websites = false
+    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
     const favorite = {id: 1, user_id: 1, comment_id: 1} 
     expect(
       reducer(prevState, {
@@ -92,9 +103,10 @@ describe('category list reducer', () => {
         res_count: 1,
         score: 20,
         thumbnail_url: "/images/placeholder.png",
-        current_user_id: 1,
         comments: [{id: 1, content: "comment", favorite_user_ids: [1]}],
       },
+      has_more_images,
+      has_more_websites,
       post_comment_result
     })
   })

@@ -36,4 +36,5 @@ Auth.propTypes = {
   "access-token": PropTypes.string,
   "uid": PropTypes.string,
   "client": PropTypes.string,
+  "user_id": PropTypes.number,
 }

@@ -14,6 +14,8 @@ import {
   addCommentImage,
   addCommentWebsite,
   getCommentsAsync,
+  getWebsitesAsync,
+  getImagesAsync,
 } from '../../actions/board/show'
 
 import {
@@ -68,6 +70,12 @@ function mapDispatchToProps(dispatch) {
     },
     getComments: (board_id, gt_id, lt_id) => {
       dispatch(getCommentsAsync(board_id, gt_id, lt_id))
+    },
+    getWebsites: (board_id, gt_id, lt_id) => {
+      dispatch(getWebsitesAsync(board_id, gt_id, lt_id))
+    },
+    getImages: (board_id, gt_id, lt_id) => {
+      dispatch(getImagesAsync(board_id, gt_id, lt_id))
     },
     showCommentModal: (data) => {
       dispatch(changeModalComments({}, []))

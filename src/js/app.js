@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 // components
 import Home from './components/home'
@@ -23,6 +23,7 @@ import '../css/home.css'
 import '../css/about.css'
 import '../css/menu.css'
 import '../css/message.css'
+import '../css/category.css'
 import '../css/board.css'
 import '../css/comment.css'
 import '../css/footer.css'
@@ -50,6 +51,7 @@ render(
             <Route path="/login" component={Login}/>
             <Route path="/sign_up" component={SignUp}/>
             <Route path="/categories/:id/boards" component={BoardList}/>
+            <Route path="/categories/:id" component={Home}/>
             <Route path="/boards/search/:query" component={BoardList}/>
             <Route path="/boards/:id/images" component={ShowBoard}/>
             <Route path="/boards/:id/websites" component={ShowBoard}/>
@@ -57,6 +59,7 @@ render(
             <Route path="/boards" component={BoardList}/>
             <Route path="/contact" component={Contact}/>
             <Route path="/about" component={About}/>
+            <Redirect path="*" to='/'/>
           </Switch>
           <Footer />
           { (() => { if( APP_CONFIG.APP_ENV != "production" ){ return(<DevTools />) } })() }

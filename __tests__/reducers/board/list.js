@@ -12,9 +12,6 @@ describe('board list reducer', () => {
       total_page: 1,
       next_page: null,
       prev_page: null,
-      categories: [],
-      selected_category_id: 0,
-      post_board_result: {},
     })
   })
 
@@ -34,9 +31,6 @@ describe('board list reducer', () => {
       total_page: 1,
       next_page: null,
       prev_page: null,
-      categories: [],
-      selected_category_id: 0,
-      post_board_result: {},
     }
     expect(
       reducer(prevState, {
@@ -49,59 +43,6 @@ describe('board list reducer', () => {
       total_page: pagination.total,
       next_page: pagination.next,
       prev_page: pagination.prev,
-      categories: [],
-      selected_category_id: 0,
-      post_board_result: {},
-    })
-  })
-
-  it('should handle GET_CATEGORIES', () => {
-    const categories = [{name: "test"}]
-    const prevState = {
-      boards: [],
-      per: 20,
-      page: 1,
-      categories: [],
-      selected_category_id: 0,
-      post_board_result: {},
-    }
-    expect(
-      reducer(prevState, {
-        type: types.GET_CATEGORIES,
-        categories
-      })
-    ).toEqual({
-      boards: [],
-      per: 20,
-      page: 1,
-      categories: categories,
-      selected_category_id: 0,
-      post_board_result: {},
-    })
-  })
-
-  it('should handle CHANGE_CATEGORY', () => {
-    const category_id = 1
-    const prevState = {
-      boards: [],
-      per: 20,
-      page: 1,
-      categories: [],
-      selected_category_id: 0,
-      post_board_result: {},
-    }
-    expect(
-      reducer(prevState, {
-        type: types.CHANGE_CATEGORY,
-        category_id
-      })
-    ).toEqual({
-      boards: [],
-      per: 20,
-      page: 1,
-      categories: [],
-      selected_category_id: category_id,
-      post_board_result: {},
     })
   })
 })

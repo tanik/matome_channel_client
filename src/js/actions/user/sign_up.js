@@ -1,5 +1,6 @@
 import * as type from '../../constants/action_types'
 import { setNotices, setErrors } from '../../actions/message'
+import { setAuth } from '../../actions/user/auth'
 import { MatomeChannel } from '../../utils/matome_channel'
 
 const signUpSuccess = (response) => {
@@ -13,6 +14,7 @@ const signUpFailure = (response) => {
 export const signUpAsync = (email, password, password_confirmation) => {
   return dispatch => {
     return MatomeChannel.Auth.signUp(email, password, password_confirmation, dispatch).then( (resp) => {
+      dispatch(setAuth({user_id: resp.data.data.id}))
       dispatch(signUpSuccess(resp.data))
       dispatch(setNotices(["ユーザ登録が完了しました！"]))
     }).catch( (error) => {
