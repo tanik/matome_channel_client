@@ -92,11 +92,11 @@ export default class UserHome extends Component {
 
   renderRecommends(){
     if(this.props.recommends.length > 0){
-      return(
-        this.props.recommends.map( (board) => {
-          // TODO
-        })
-      )
+      // TODO
+      // return(
+      //   this.props.recommends.map( (board) => {
+      //   })
+      // )
     }else{
       return(
         <div>

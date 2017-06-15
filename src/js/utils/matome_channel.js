@@ -22,7 +22,13 @@ class Client {
         }
         if( auth["access-token"] && auth.uid && auth.client ){
           if(needAuth){
-            dispatch(setAuth(auth))
+            if(config.headers.client){
+              if(config.headers.client == auth.client){
+                dispatch(setAuth(auth))
+              }
+            }else{
+              dispatch(setAuth(auth))
+            }
           }
         }        resolve(response)
       }).catch( (error) => {
