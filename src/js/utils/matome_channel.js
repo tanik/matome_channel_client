@@ -305,11 +305,11 @@ MatomeChannel.User = class {
       }, dispatch)
     )
   }
-  static my_comments(params,dispatch){
+  static timeline_comments(params,dispatch){
     return(
       Client.request({
         method: "get",
-        url: '/my/comments',
+        url: '/my/timeline_comments',
         params: params,
       }, dispatch)
     )

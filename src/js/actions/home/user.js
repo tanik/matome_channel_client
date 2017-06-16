@@ -30,7 +30,7 @@ const getMoreComments = (comments) => {
 
 export const getMoreCommentsAsync = (lt_id) => {
   return dispatch => {
-    return MatomeChannel.User.my_comments({lt_id}, dispatch).then( (resp) => {
+    return MatomeChannel.User.timeline_comments({lt_id}, dispatch).then( (resp) => {
       dispatch(getMoreComments(resp.data))
     }).catch( (error) => {
       console.error('getMypageInfomationsAsync error', error)

@@ -72,9 +72,10 @@ export default class Comment extends Component {
 
   renderName(){
     if(this.isShow('name')){
+      const class_name = this.isMyComment() ? "comment-header-name mine" : 'comment-header-name'
       return(
-        <span className="comment-header-name">
-          <strong>{ this.isMyComment() ? "あなたです！" : this.props.comment.name }</strong>
+        <span className={ class_name }>
+          <strong>{ this.props.comment.name }</strong>
         </span>
       )
     }

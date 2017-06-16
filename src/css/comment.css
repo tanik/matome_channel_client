@@ -14,7 +14,10 @@
     }
     &-name{
       color: var(--commentHeaderNameColor);
-      margin-left: 20px; 
+      margin-left: 20px;
+    }
+    &-name.mine{
+      color: var(--myCommentNameColor);
     }
     &-created_at{
       color: #111;
