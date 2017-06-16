@@ -14,7 +14,9 @@ class Client {
         config.headers = Auth.info()
       }
       let instance = axios.create()
+      console.warn(`req: ${config.method} ${config.url}`, config.headers)
       instance.request(config).then( (response) => {
+        console.warn(`[success] res ${config.method} ${config.url}`, response.headers)
         let auth = {
           "access-token": response.headers["access-token"],
           uid: response.headers.uid,
@@ -25,13 +27,18 @@ class Client {
             if(config.headers.client){
               if(config.headers.client == auth.client){
                 dispatch(setAuth(auth))
+              }else{
+                console.warn(`client unmatch`, config.headers)
               }
             }else{
+              // login and signed in
               dispatch(setAuth(auth))
             }
           }
-        }        resolve(response)
+        }
+        resolve(response)
       }).catch( (error) => {
+        console.warn(`[failure] res ${config.method} ${config.url}`, error)
         if(error.response &&
            error.response.status == 401 ){
           // token期限切れ？
@@ -295,6 +302,15 @@ MatomeChannel.User = class {
         method: "get",
         url: '/my',
         params: {},
+      }, dispatch)
+    )
+  }
+  static my_comments(params,dispatch){
+    return(
+      Client.request({
+        method: "get",
+        url: '/my/comments',
+        params: params,
       }, dispatch)
     )
   }

@@ -47,6 +47,7 @@ export default class BoardList extends Component {
       <div>
         <Well className="board-title">
           <Grid>
+            <h2>スレッド一覧</h2>
             <div className="board-tool-box pull-right">
               <button className="new-button"
                 onClick={ this.props.openNewBoardModal }
@@ -55,7 +56,6 @@ export default class BoardList extends Component {
                 <span className="button-text">新規スレッド</span>
               </button>
             </div>
-            <h2>スレッド一覧</h2>
           </Grid>
         </Well>
         <CategoryList

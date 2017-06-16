@@ -69,7 +69,7 @@ export default class Footer extends React.Component {
           <p>
             偉そうにまとめてみましたが、まとめちゃんねるは勉強用＆
             <OverlayTrigger placement="top" overlay={ this.tooltip() }>
-              <strong>求職</strong>
+              <strong className='want-job'>求職</strong>
             </OverlayTrigger>
             のアピール用に作ったWEBサービスです。
           </p>

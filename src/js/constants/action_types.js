@@ -14,6 +14,11 @@ export const GET_POPULAR_COMMENTS              = 'GET_POPULAR_COMMENTS'
 // user home
 export const GET_MYPAGE_INFO                   = 'GET_MYPAGE_INFO'
 export const SET_MYPAGE_LOADING                = 'SET_MYPAGE_LOADING'
+export const ADD_COMMENT_ON_TL                 = 'ADD_COMMENT_ON_TL'
+export const CHANGE_FAVORITE_COMMENT_ON_TL     = 'CHANGE_FAVORITE_COMMENT_ON_TL'
+export const ADD_COMMENT_IMAGE_ON_TL           = 'ADD_COMMENT_IMAGE_ON_TL'
+export const ADD_COMMENT_WEBSITE_ON_TL         = 'ADD_COMMENT_WEBSITE_ON_TL'
+export const GET_MORE_COMMENTS_ON_TL           = 'GET_MORE_COMMENTS_ON_TL'
 
 // category
 export const GET_CATEGORIES                    = 'GET_CATEGORIES'

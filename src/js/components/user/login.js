@@ -37,32 +37,30 @@ export default class Login extends Component {
         <Grid>
         <form className="form-horizontal" onSubmit={ this.login.bind(this) }>
           <FormGroup validationState={ this.isValid("email") }>
-            <Col componentClass={ControlLabel} xs={2}>
+            <Col componentClass={ControlLabel} xs={12} sm={3}>
               メールアドレス
             </Col>
-            <Col xs={4}>
+            <Col xs={12} sm={5}>
               <FormControl type="email" inputRef={ (ref) => { this.email = ref } }/>
             </Col>
           </FormGroup>
           <FormGroup validationState={ this.isValid("password") }>
-            <Col componentClass={ControlLabel} xs={2}>
+            <Col componentClass={ControlLabel} xs={12} sm={3}>
               パスワード
             </Col>
-            <Col xs={4}>
+            <Col xs={12} sm={5}>
               <FormControl type="password" inputRef={ (ref) => { this.password = ref } }/>
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col xsOffset={2} xs={2}>
+            <Col xsOffset={0} xs={12} smOffset={3} sm={9}>
               <Button type="submit">
                 ログイン
               </Button>
             </Col>
-            <Col xs={2} xs={4}>
-            </Col>
           </FormGroup>
           <FormGroup>
-            <Col xsOffset={2} xs={2}>
+            <Col xsOffset={0} xs={12} smOffset={3} sm={9}>
               <Link to="/sign_up">新規登録はこちらから</Link>
             </Col>
           </FormGroup>

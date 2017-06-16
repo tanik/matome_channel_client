@@ -98,6 +98,8 @@ export default (state = initialState, action) => {
     case action_type.POST_COMMENT_SUCCESS: {
       return({
         board: state.board,
+        has_more_images: state.has_more_images,
+        has_more_websites: state.has_more_websites,
         post_comment_result: {
           state: "success",
           response: action.response,
@@ -107,6 +109,8 @@ export default (state = initialState, action) => {
     case action_type.POST_COMMENT_FAILURE: {
       return({
         board: state.board,
+        has_more_images: state.has_more_images,
+        has_more_websites: state.has_more_websites,
         post_comment_result: {
           state: "failure",
           error: action.error,

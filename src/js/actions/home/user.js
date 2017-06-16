@@ -23,3 +23,34 @@ export const getMypageInfomationsAsync = () => {
     })
   }
 }
+
+const getMoreComments = (comments) => {
+  return { type: type.GET_MORE_COMMENTS_ON_TL, comments: comments }
+}
+
+export const getMoreCommentsAsync = (lt_id) => {
+  return dispatch => {
+    return MatomeChannel.User.my_comments({lt_id}, dispatch).then( (resp) => {
+      dispatch(getMoreComments(resp.data))
+    }).catch( (error) => {
+      console.error('getMypageInfomationsAsync error', error)
+      dispatch(setErrors(["エラーが発生しました。しばらく待ってリトライしてみてください…。"]))
+    })
+  }
+}
+
+export const addCommentOnTimeline = (comment) => {
+  return { type: type.ADD_COMMENT_ON_TL, comment: comment }
+}
+
+export const addCommentImageOnTimeline = (comment_image) => {
+  return { type: type.ADD_COMMENT_IMAGE_ON_TL, comment_image: comment_image }
+}
+
+export const addCommentWebsiteOnTimeline = (comment_website) => {
+  return { type: type.ADD_COMMENT_WEBSITE_ON_TL, comment_website: comment_website }
+}
+
+export const changeFavoriteCommentOnTimeline = (favorite) => {
+  return { type: type.CHANGE_FAVORITE_COMMENT_ON_TL, favorite: favorite }
+}

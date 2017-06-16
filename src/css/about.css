@@ -20,5 +20,8 @@
   }
   &-appeal{
     margin-top: 200px;
+    & .want-job{
+      font-size: 24px;
+    }
   }
 }

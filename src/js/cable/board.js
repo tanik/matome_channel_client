@@ -1,8 +1,8 @@
 import { Cable } from './cable';
 
 export default class BoardCable{
-  constructor(board_id, dispatcher){
-    this.board_id = board_id
+  constructor(params, dispatcher){
+    this.params = params
     this.dispatcher = dispatcher
     this.subscribe()
   }
@@ -11,7 +11,11 @@ export default class BoardCable{
     let self = this
     this.cable = Cable.subscriptions.create("BoardChannel", {
       connected() {
-        self.startObserve()
+        if(self.params.board_id){
+          self.startObserve()
+        }else if(self.params.user_id){
+          self.startObserveFavorites()
+        }
       },
 
       disconnected() {
@@ -28,6 +32,10 @@ export default class BoardCable{
   }
 
   startObserve(){
-    this.cable.perform("start_observe", {board_id: this.board_id})
+    this.cable.perform("start_observe", {board_id: this.params.board_id})
+  }
+
+  startObserveFavorites(){
+    this.cable.perform("start_observe_favorites", {user_id: this.params.user_id})
   }
 }

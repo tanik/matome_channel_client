@@ -115,7 +115,7 @@ export default class Comment extends Component {
     }).replace(/\r?\n/g, '<br/>')
     const anchor_matcher = new AnchorMatcher('anchor', {}, (match, props) => {
       return(
-        <a key={ Math.random() }
+        <a key={ `comment-${this.props.comment.id}-content-${Math.random()}` }
            data-num={ props.extraProp }
            onClick={ this.handleClickAnchor.bind(this) }>
           {match}
@@ -131,7 +131,7 @@ export default class Comment extends Component {
         <ul className="comment-image-list list-inline">
         { this.props.comment.websites.map( (website) => {
             return(
-              <li key={ `website-${website.id}` }>
+              <li key={ `comment-${this.props.comment.id}-website-${website.id}` }>
                 <Thumbnail target="_BLANK" href={ website.full_url } src={ website.thumbnail_url } />
               </li>
             )
@@ -148,7 +148,7 @@ export default class Comment extends Component {
         <ul className="comment-image-list list-inline">
         { this.props.comment.images.map( (image) => {
             return(
-              <li key={ `image-${image.id}` }>
+              <li key={ `comment-${this.props.comment.id}-image-${image.id}` }>
                 <Thumbnail target="_BLANK" href={ image.full_url } src={ image.thumbnail_url } />
               </li>
             )

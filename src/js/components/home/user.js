@@ -9,8 +9,10 @@ import {
   ProgressBar,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import Auth from '../../utils/auth'
 import Comment from '../../components/comment/comment';
+import BoardCable from '../../cable/board'
 
 export default class UserHome extends Component {
   constructor(props) {
@@ -19,32 +21,74 @@ export default class UserHome extends Component {
 
   componentWillMount() {
     this.props.getMypageInfomations()
+    this.sub = new BoardCable({user_id: Auth.currentUserId()}, this.cable_dispather.bind(this))
+  }
+
+  componentWillUnmount(){
+    this.sub.unsubscribe()
+  }
+
+  cable_dispather(data){
+    switch(data.action) {
+      case "comment_added": {
+        this.props.addComment(data.comment)
+        return
+      }
+      case "comment_image_added": {
+        this.props.addCommentImage(data.comment_image)
+        return
+      }
+      case "comment_website_added": {
+        this.props.addCommentWebsite(data.comment_website)
+        return
+      }
+      case "comment_favorited": {
+        this.props.changeFavoriteComment(data.favorite)
+        return
+      }
+      default:{
+        console.warn("unknown action: ", data)
+        return
+      }
+    }
+  }
+
+  getMoreComments(){
+    const comments = this.props.comments
+    const lt_id = comments[comments.length-1].id
+    this.props.getMoreComments(lt_id)
   }
 
   renderComments(){
     if(this.props.comments.length > 0){
       return(
-        this.props.comments.map( (comment) => {
+        <InfiniteScroll
+          next={ this.getMoreComments.bind(this) }
+          hasMore={ this.props.has_more_comments }
+          loader={ <ProgressBar active now={100} /> }
+          endMessage={ "-" } >
+        { this.props.comments.map( (comment) => {
           const board_url = `/boards/${comment.board.id}`
           return (
-            <div key={ `board-comment-${comment.board.id}-${comment.id}` }>
-              <h5>スレッド: <Link to={ board_url }>{ comment.board.title }</Link></h5>
-              <Comment
-                showOptions={ {
-                  num: true,
-                  name: true,
-                  created_at: true,
-                  images: true,
-                  websits: true,
-                  toolbox: true,
-                } }
-                comment={comment}
-                favorite={ () => { this.props.history.push(board_url) } }
-                reply={ () => { this.props.history.push(board_url) } }
-                showCommentModal={ () => {} } />
-            </div>
+              <div key={ `board-comment-${comment.board.id}-${comment.id}` }>
+                <h5>スレッド: <Link to={ board_url }>{ comment.board.title }</Link></h5>
+                <Comment
+                  showOptions={ {
+                    num: true,
+                    name: true,
+                    created_at: true,
+                    images: true,
+                    websites: true,
+                    toolbox: true,
+                  } }
+                  comment={ comment }
+                  favorite={ () => { this.props.history.push(board_url) } }
+                  reply={ () => { this.props.history.push(board_url) } }
+                  showCommentModal={ () => {} } />
+              </div>
           )
-        })
+        }) }
+        </InfiniteScroll>
       )
     }else{
       return(
@@ -182,9 +226,15 @@ export default class UserHome extends Component {
 
 UserHome.propTypes = {
   loading: PropTypes.bool.isRequired,
+  has_more_comments: PropTypes.bool.isRequired,
   comments: PropTypes.array.isRequired,
   populars: PropTypes.array.isRequired,
   recommends: PropTypes.array.isRequired,
   histories: PropTypes.array.isRequired,
   getMypageInfomations: PropTypes.func.isRequired,
+  addComment: PropTypes.func.isRequired,
+  addCommentImage: PropTypes.func.isRequired,
+  addCommentWebsite: PropTypes.func.isRequired,
+  changeFavoriteComment: PropTypes.func.isRequired,
+  getMoreComments: PropTypes.func.isRequired,
 }

@@ -58,10 +58,10 @@ export default class Contact extends Component {
         <Grid>
           <form className="form-horizontal" onSubmit={ this.post.bind(this) }>
             <FormGroup validationState={ this.isValid("email") }>
-              <Col componentClass={ControlLabel} xs={2}>
+              <Col componentClass={ControlLabel} xs={12} sm={3}>
                 メールアドレス
               </Col>
-              <Col xs={4}>
+              <Col xs={12} sm={5}>
                 <FormControl
                   required
                   type="email"
@@ -69,10 +69,10 @@ export default class Contact extends Component {
               </Col>
             </FormGroup>
             <FormGroup validationState={ this.isValid("content") }>
-              <Col componentClass={ControlLabel} xs={2}>
+              <Col componentClass={ControlLabel} xs={12} sm={3}>
                 お問い合わせ内容
               </Col>
-              <Col xs={10}>
+              <Col xs={12} sm={9}>
                 <FormControl componentClass="textarea"
                 placeholder=""
                 rows="10"
@@ -81,7 +81,7 @@ export default class Contact extends Component {
               </Col>
             </FormGroup>
             <FormGroup>
-              <Col xsOffset={2} xs={10}>
+              <Col xsOffset={0} xs={12} smOffset={3} sm={9}>
                 <Button type="submit">
                   送信する
                 </Button>

@@ -17,7 +17,7 @@ export default class ShowBoard extends Component {
 
   componentWillMount() {
     this.getBoard()
-    this.sub = new BoardCable(this.getID(), this.cable_dispather.bind(this))
+    this.sub = new BoardCable({board_id: this.getID()}, this.cable_dispather.bind(this))
   }
 
   componentWillUnmount(){
