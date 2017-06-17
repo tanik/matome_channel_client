@@ -19,8 +19,8 @@ test:
   override:
     - yarn test
 
-#deployment:
-#  production:
-#    branch: master
-#    commands:
-#      - sh build.sh
+deployment:
+  production:
+    branch: master
+    commands:
+      - sh build.sh

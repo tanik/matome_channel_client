@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
         }
       }else{
         // clear auth
-        auth = {}
+        auth = initialState
       }
       return auth
     }

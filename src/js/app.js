@@ -21,6 +21,7 @@ import MyBoards from './containers/user/board'
 import MyComments from './containers/user/comment'
 
 // styles
+import '../css/auth.css'
 import '../css/home.css'
 import '../css/about.css'
 import '../css/menu.css'

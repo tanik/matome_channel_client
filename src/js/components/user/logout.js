@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Grid, Well } from 'react-bootstrap'
+import { Grid, Well, ProgressBar } from 'react-bootstrap'
 import Auth from '../../utils/auth'
 
 export default class Logout extends Component {
@@ -16,9 +16,10 @@ export default class Logout extends Component {
   render(){
     if( Auth.isAuthorized() ){
       return(
-        <Grid>
+        <Grid className='logout'>
           <Well>
-            ログアウト中
+            <p>ログアウト中です…</p>
+            <ProgressBar active now={100} />
           </Well>
         </Grid>
       )
