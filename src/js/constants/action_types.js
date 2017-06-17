@@ -11,6 +11,7 @@ export const CLEAR_MESSAGES                    = 'CLEAR_MESSAGES'
 // guest home
 export const GET_POPULAR_BOARDS                = 'GET_POPULAR_BOARDS'
 export const GET_POPULAR_COMMENTS              = 'GET_POPULAR_COMMENTS'
+
 // user home
 export const GET_MYPAGE_INFO                   = 'GET_MYPAGE_INFO'
 export const SET_MYPAGE_LOADING                = 'SET_MYPAGE_LOADING'
@@ -19,6 +20,13 @@ export const CHANGE_FAVORITE_COMMENT_ON_TL     = 'CHANGE_FAVORITE_COMMENT_ON_TL'
 export const ADD_COMMENT_IMAGE_ON_TL           = 'ADD_COMMENT_IMAGE_ON_TL'
 export const ADD_COMMENT_WEBSITE_ON_TL         = 'ADD_COMMENT_WEBSITE_ON_TL'
 export const GET_MORE_COMMENTS_ON_TL           = 'GET_MORE_COMMENTS_ON_TL'
+
+// my page
+export const GET_MY_BOARDS                     = 'GET_MY_BOARDS'
+export const GET_MY_COMMENTS                   = 'GET_MY_COMMENTS'
+export const GET_MY_FAVORITE_BOARDS            = 'GET_MY_FAVORITE_BOARDS'
+export const GET_MY_FAVORITE_COMMENTS          = 'GET_MY_FAVORITE_COMMENTS'
+export const GET_MY_HISTORIES                  = 'GET_MY_HISTORIES'
 
 // category
 export const GET_CATEGORIES                    = 'GET_CATEGORIES'

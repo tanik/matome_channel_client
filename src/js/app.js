@@ -17,6 +17,8 @@ import ShowBoard from './containers/board/show'
 import SignUp from './containers/user/sign_up'
 import Login from './containers/user/login'
 import Logout from './containers/user/logout'
+import MyBoards from './containers/user/board'
+import MyComments from './containers/user/comment'
 
 // styles
 import '../css/home.css'
@@ -27,6 +29,7 @@ import '../css/category.css'
 import '../css/board.css'
 import '../css/comment.css'
 import '../css/footer.css'
+import '../css/mypage.css'
 
 // store
 let store
@@ -50,6 +53,11 @@ render(
             <Route path="/logout" component={Logout}/>
             <Route path="/login" component={Login}/>
             <Route path="/sign_up" component={SignUp}/>
+            <Route path="/my/boards" render={ () => <MyBoards type={ 'boards' }/> } />
+            <Route path="/my/favorite_boards" render={ () => <MyBoards type={ 'favorite_boards' }/> } />
+            <Route path="/my/comments" render={ () => <MyComments type={ 'comments' }/> } />
+            <Route path="/my/favorite_comments" render={ () => <MyComments type={ 'favorite_comments' }/> } />
+            <Route path="/my/histories" render={ () => <MyBoards type={ 'histories' }/> } />
             <Route path="/categories/:id/boards" component={BoardList}/>
             <Route path="/categories/:id" component={Home}/>
             <Route path="/boards/search/:query" component={BoardList}/>

@@ -153,13 +153,16 @@ export default class UserHome extends Component {
   renderHistories(){
     if(this.props.histories.length > 0){
       return(
-        <ul className='home-user-histories'>
-        { this.props.histories.map( (board) =>
-          <li key={ `history-board-${board.id}` }>
-            <Link to={ `/boards/${board.id}` }>{ board.title }</Link>
-          </li>
-        ) }
-        </ul>
+        <div>
+          <ul className='home-user-histories'>
+          { this.props.histories.map( (board) =>
+            <li key={ `history-board-${board.id}` }>
+              <Link to={ `/boards/${board.id}` }>{ board.title }</Link>
+            </li>
+          ) }
+          </ul>
+          <Link className='pull-right' to='/my/histories'>もっと見る</Link>
+        </div>
       )
     }else{
       return(

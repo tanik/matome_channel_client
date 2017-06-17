@@ -39,9 +39,13 @@ export default class Menu extends React.Component {
       return(
         <ul className="nav navbar-nav navbar-right">
           <NavDropdown eventKey={1} title={ Auth.info().uid } id="basic-nav-dropdown">
-            <MenuItem eventKey={1.1}>Action</MenuItem>
+            <MenuItem eventKey={1.1} href="/my/boards">作成スレッド一覧</MenuItem>
+            <MenuItem eventKey={1.2} href="/my/comments">書き込みコメント一覧</MenuItem>
+            <MenuItem eventKey={1.3} href="/my/favorite_boards">お気に入りスレッド一覧</MenuItem>
+            <MenuItem eventKey={1.4} href="/my/favorite_comments">お気に入りコメント一覧</MenuItem>
+            <MenuItem eventKey={1.5} href="/my/histories">スレッド閲覧履歴</MenuItem>
             <MenuItem divider />
-            <MenuItem eventKey={1.3} href="/logout">ログアウト</MenuItem>
+            <MenuItem eventKey={1.10} href="/logout">ログアウト</MenuItem>
           </NavDropdown>
         </ul>
       )    

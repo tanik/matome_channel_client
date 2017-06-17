@@ -11,34 +11,32 @@ class Client {
   static request(config, dispatch, needAuth=true){
     return new Promise( (resolve, reject) => {
       if(needAuth){
-        config.headers = Auth.info()
+        let auth = Auth.info()
+        if( auth["access-token"] && auth.uid && auth.client ){
+          config.headers = {
+            "access-token": auth["access-token"],
+            uid: auth.uid,
+            client: auth.client,
+          }
+        }else{
+          config.headers = {}
+        }
       }
       let instance = axios.create()
-      console.warn(`req: ${config.method} ${config.url}`, config.headers)
       instance.request(config).then( (response) => {
-        console.warn(`[success] res ${config.method} ${config.url}`, response.headers)
         let auth = {
           "access-token": response.headers["access-token"],
           uid: response.headers.uid,
-          client: response.headers.client
+          client: response.headers.client,
+          expiry: Number(response.headers.expiry),
         }
-        if( auth["access-token"] && auth.uid && auth.client ){
+        if( auth["access-token"] && auth.uid && auth.client){
           if(needAuth){
-            if(config.headers.client){
-              if(config.headers.client == auth.client){
-                dispatch(setAuth(auth))
-              }else{
-                console.warn(`client unmatch`, config.headers)
-              }
-            }else{
-              // login and signed in
-              dispatch(setAuth(auth))
-            }
+            dispatch(setAuth(auth))
           }
         }
         resolve(response)
       }).catch( (error) => {
-        console.warn(`[failure] res ${config.method} ${config.url}`, error)
         if(error.response &&
            error.response.status == 401 ){
           // token期限切れ？
@@ -305,11 +303,11 @@ MatomeChannel.User = class {
       }, dispatch)
     )
   }
-  static timeline_comments(params,dispatch){
+  static myitem(item, params,dispatch){
     return(
       Client.request({
         method: "get",
-        url: '/my/timeline_comments',
+        url: `/my/${item}`,
         params: params,
       }, dispatch)
     )

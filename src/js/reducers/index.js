@@ -15,6 +15,8 @@ import sign_up from './user/sign_up'
 import login from './user/login'
 import logout from './user/logout'
 import auth from './user/auth'
+import my_boards from './user/board'
+import my_comments from './user/comment'
 
 export default combineReducers({
   auth: auth,
@@ -26,6 +28,8 @@ export default combineReducers({
   contact: contact,
   guest_home: guest_home,
   user_home: user_home,
+  my_boards: my_boards,
+  my_comments: my_comments,
   category_list: category_list,
   new_board: new_board,
   board_list: board_list,

@@ -4,6 +4,7 @@ const initialState = {
   "uid": "",
   "client": "",
   "access-token": "",
+  "expiry": 0,
   "user_id": null,
 }
 
@@ -14,7 +15,11 @@ export default (state = initialState, action) => {
       const set_keys = Object.keys(action.auth)
       if(set_keys.length > 0){
         // set auth
-        set_keys.forEach( (key) => auth[key] = action.auth[key] )
+        if(action.auth.user_id || (action.auth.expiry && action.auth.expiry > state.expiry)){
+          set_keys.forEach( (key) => auth[key] = action.auth[key] )
+        }else{
+          console.warn('old token received', auth, action.auth)
+        }
       }else{
         // clear auth
         auth = {}
