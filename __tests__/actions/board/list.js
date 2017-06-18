@@ -13,6 +13,9 @@ const mockStore = configureMockStore(middlewares)
 const host = APP_CONFIG.API_BASE
 axios.defaults.host = host;
 axios.defaults.adapter = httpAdapter;
+
+console.error = () => {}
+
 describe('actions', () => {
   it('should create an action to get boards success', () => {
     const resp_data = {
