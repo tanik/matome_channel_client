@@ -65,8 +65,24 @@ export const postCommentAsync = (board_id, name, content) => {
       dispatch(postCommentSuccess(resp.data))
     }).catch( (error) => {
       console.error(error)
-      dispatch(postCommentFailure(error))
-      dispatch(setErrors(["エラーが発生しました。しばらく待ってリトライしてみてください…。"]))
+      let error_messages = ["エラーが発生しました。しばらくお待ちいただいてから再度リトライしてください。"]
+      let error_attributes = {}
+      if( error.response &&
+          error.response.data ){
+        error_attributes = error.response.data
+        const field2name = {
+          name: '名前',
+          content: 'コメント',
+        }
+        error_messages = []
+        Object.keys(error.response.data).forEach( (field) => {
+          error.response.data[field].forEach( (error) => {
+            error_messages.push(`${field2name[field]}${error}`)
+          })
+        })
+      }
+      dispatch(postCommentFailure(error_attributes))
+      dispatch(setErrors(error_messages))
     })
   }
 }
@@ -90,7 +106,6 @@ export const addCommentWebsite = (comment_website) => {
 const getCommentsSuccess = (comments) => {
   return { type: type.GET_COMMENTS_SUCCESS, comments: comments }
 }
-
 
 export const getCommentsAsync = (board_id, gt_id, lt_id) => {
   return dispatch => {

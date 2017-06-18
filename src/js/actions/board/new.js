@@ -17,8 +17,26 @@ export const postBoardAsync = (category_id, title,  name, content) => {
       // なんかうまく画面遷移してくれない・・なぜなの・・
       //dispatch(push(`/boards/${resp.data.id}`))
     }).catch( (error) => {
-      dispatch(setErrors(['エラーなのだ・・・']))
-      dispatch(postBoardFailure(error))
+      let error_messages = ["エラーが発生しました。しばらくお待ちいただいてから再度リトライしてください。"]
+      let error_attributes = {}
+      if( error.response &&
+          error.response.data ){
+        error_attributes = error.response.data
+        const field2name = {
+          title: 'タイトル',
+          category_id: 'カテゴリ',
+          "comments.name": '名前',
+          "comments.content": 'コメント',
+        }
+        error_messages = []
+        Object.keys(error.response.data).forEach( (field) => {
+          error.response.data[field].forEach( (error) => {
+            error_messages.push(`${field2name[field]}${error}`)
+          })
+        })
+      }
+      dispatch(setErrors(error_messages))
+      dispatch(postBoardFailure(error_attributes))
     })
   }
 }

@@ -14,8 +14,10 @@ const host = APP_CONFIG.API_BASE
 axios.defaults.host = host;
 axios.defaults.adapter = httpAdapter;
 
+console.error = () => {}
+
 describe('actions', () => {
-  it('should create an action to get category list async', () => {
+  it('should create an action to get category list async success', () => {
     const categories = [{name: "test"}]
     nock(host)
       .get('/categories')
@@ -27,7 +29,21 @@ describe('actions', () => {
       type: types.SET_NEW_BOARD_CATEGORIES,
       categories
     }]
-    const store = mockStore({ categories: [] })
+    const store = mockStore()
+    return store.dispatch(actions.getCategoriesAsync()).then(() => {
+      expect(store.getActions()).toEqual(expectedActions)
+    })
+  })
+
+  it('should create an action to get category list async failure', () => {
+    nock(host)
+      .get('/categories')
+      .reply(500)
+    const expectedActions = [{
+      type: types.SET_ERRORS,
+      errors: ["エラーが発生しました。しばらく待ってリトライしてみてください…。"],
+    }]
+    const store = mockStore()
     return store.dispatch(actions.getCategoriesAsync()).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })

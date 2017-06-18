@@ -12,21 +12,24 @@ const setContactErrorsInner = (errors) => {
 
 export const setContactErrors = (errors) => {
   return dispatch => {
-    dispatch(setContactErrorsInner(errors))
-    let error_messages = errors.full_messages
-    if(!error_messages){
-      const field2name = {
-        email: 'メールアドレス',
-        content: 'お問い合わせ内容',
-      }
-      error_messages = []
-      Object.keys(errors).forEach( (field) => {
-        errors[field].forEach( (error) => {
-          error_messages.push(`${field2name[field]}${error}`)
+    return new Promise( (resolve) => {
+      dispatch(setContactErrorsInner(errors))
+      let error_messages = errors.full_messages
+      if(!error_messages){
+        const field2name = {
+          email: 'メールアドレス',
+          content: 'お問い合わせ内容',
+        }
+        error_messages = []
+        Object.keys(errors).forEach( (field) => {
+          errors[field].forEach( (error) => {
+            error_messages.push(`${field2name[field]}${error}`)
+          })
         })
-      })
-    }
-    dispatch(setErrors(error_messages))
+      }
+      dispatch(setErrors(error_messages))
+      resolve()
+    })
   }
 }
 

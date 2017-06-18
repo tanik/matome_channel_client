@@ -14,7 +14,7 @@ const host = APP_CONFIG.API_BASE
 axios.defaults.host = host;
 axios.defaults.adapter = httpAdapter;
 describe('actions', () => {
-  it('should create an action to get boards', () => {
+  it('should create an action to get boards success', () => {
     const resp_data = {
       boards: [{title: "test"}],
       pagination: {
@@ -42,5 +42,21 @@ describe('actions', () => {
       expect(store.getActions()).toEqual(expectedActions)
     })
   })
-})
 
+  it('should create an action to get boards failure', () => {
+    const page = 1
+    const per = 20
+    const category_id = 1
+    nock(host)
+      .get(`/boards?page=${page}&per=${per}&category_id=${category_id}`)
+      .reply(500)
+    const expectedActions = [{
+      type: types.SET_ERRORS,
+      errors: ["エラーが発生しました。しばらく待ってリトライしてみてください…。"],
+    }]
+    const store = mockStore()
+    return store.dispatch(actions.getBoardsAsync(page, per, category_id)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions)
+    })
+  })
+})

@@ -14,7 +14,7 @@ export const changeModalComments = (comment, related_comments=[]) => {
 
 export const getCommentsByNumAsync = (board_id, num) => {
   return dispatch => {
-    MatomeChannel.Comment.get_by_num(board_id, num, dispatch).then( (resp) => {
+    return MatomeChannel.Comment.get_by_num(board_id, num, dispatch).then( (resp) => {
       dispatch(changeModalComments(resp.data.comment, resp.data.related_comments))
     }).catch( (error) => {
       console.error(error)
@@ -25,7 +25,7 @@ export const getCommentsByNumAsync = (board_id, num) => {
 
 export const getRelatedCommentsAsync = (comment) => {
   return dispatch => {
-    MatomeChannel.Comment.find(comment.board_id, comment.id, {}, dispatch).then( (resp) => {
+    return MatomeChannel.Comment.find(comment.board_id, comment.id, {}, dispatch).then( (resp) => {
       dispatch(changeModalComments(resp.data.comment, resp.data.related_comments))
     }).catch( (error) => {
       console.error(error)

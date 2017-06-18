@@ -130,7 +130,7 @@ MatomeChannel.Board = class {
     return(
       Client.request({
         method: "post",
-        url: `/boards/`,
+        url: `/boards`,
         data: {
           board: {
             category_id: category_id,
@@ -216,7 +216,7 @@ MatomeChannel.Comment = class {
     return(
       Client.request({
         method: "post",
-        url: `/boards/${board_id}/comments/`,
+        url: `/boards/${board_id}/comments`,
         data: {
           name: name,
           content: content,
