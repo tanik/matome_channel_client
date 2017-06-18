@@ -49,6 +49,17 @@ export default class CategoryList extends Component {
     }))
   }
 
+  selectedCategoryRoot(){
+    const selected = this.selectedCategory()
+    if(selected){
+      if(selected.parent_id){
+        return(this.props.categories.find( category => category.id == selected.parent_id ))
+      }else{
+        return(selected)
+      }
+    }
+  }
+
   selectedChildCategories() {
     let selected = this.selectedCategory()
     if( !selected ){ return([]) }
@@ -113,7 +124,7 @@ export default class CategoryList extends Component {
               if(this.selectedCategory()){
                 return(
                   <Breadcrumb>
-                    <span className="parent text-muted">{ this.selectedCategory().name } » </span>
+                    <span className="parent text-muted">{ this.selectedCategoryRoot().name } » </span>
                     { this.selectedChildCategories().map( category => this.renderChildCategory(category) )}
                   </Breadcrumb>
                 )
