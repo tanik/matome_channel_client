@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, FormGroup, FormControl, InputGroup, Button, Glyphicon, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { LinkContainer  } from 'react-router-bootstrap'
 import Auth from '../utils/auth';
 
 export default class Menu extends React.Component {
@@ -39,13 +40,25 @@ export default class Menu extends React.Component {
       return(
         <ul className="nav navbar-nav navbar-right">
           <NavDropdown eventKey={1} title={ Auth.info().uid } id="basic-nav-dropdown">
-            <MenuItem eventKey={1.1} href="/my/boards">作成スレッド一覧</MenuItem>
-            <MenuItem eventKey={1.2} href="/my/comments">書き込みコメント一覧</MenuItem>
-            <MenuItem eventKey={1.3} href="/my/favorite_boards">お気に入りスレッド一覧</MenuItem>
-            <MenuItem eventKey={1.4} href="/my/favorite_comments">お気に入りコメント一覧</MenuItem>
-            <MenuItem eventKey={1.5} href="/my/histories">スレッド閲覧履歴</MenuItem>
+            <LinkContainer to="/my/boards">
+              <MenuItem eventKey={1.1}>作成スレッド一覧</MenuItem>
+            </LinkContainer>
+            <LinkContainer to="/my/comments">
+              <MenuItem eventKey={1.2}>書き込みコメント一覧</MenuItem>
+            </LinkContainer>
+            <LinkContainer to="/my/favorite_boards">
+              <MenuItem eventKey={1.3}>お気に入りスレッド一覧</MenuItem>
+            </LinkContainer>
+            <LinkContainer to="/my/favorite_comments">
+              <MenuItem eventKey={1.4}>お気に入りコメント一覧</MenuItem>
+            </LinkContainer>
+            <LinkContainer to="/my/histories">
+              <MenuItem eventKey={1.5}>スレッド閲覧履歴</MenuItem>
+            </LinkContainer>
             <MenuItem divider />
-            <MenuItem eventKey={1.10} href="/logout">ログアウト</MenuItem>
+            <LinkContainer to="/logout">
+              <MenuItem eventKey={1.10}>ログアウト</MenuItem>
+            </LinkContainer>
           </NavDropdown>
         </ul>
       )    
@@ -76,7 +89,9 @@ export default class Menu extends React.Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <NavItem href="/boards">スレッド</NavItem>
+              <LinkContainer to="/boards">
+                <NavItem>スレッド</NavItem>
+              </LinkContainer>
             </Nav>
             <Navbar.Form pullLeft>
               <FormGroup>

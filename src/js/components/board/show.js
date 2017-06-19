@@ -4,6 +4,7 @@ import { Grid, Row, Col, Well, Glyphicon, Breadcrumb, Thumbnail, ProgressBar } f
 import { Link } from 'react-router-dom'
 import Gallery from 'react-photo-gallery';
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap'
 import Comment from '../../components/comment/comment';
 import NewComment from '../../components/comment/new';
 import BoardCable from '../../cable/board'
@@ -287,11 +288,13 @@ export default class ShowBoard extends Component {
       {
         tree.map( category => {
           return(
-            <Breadcrumb.Item
+            <IndexLinkContainer
               key={ `category-${category.id}` }
-              href={ `/categories/${category.id}/boards` }>
-              { category.name }
-            </Breadcrumb.Item>
+              to={ `/categories/${category.id}/boards` }>
+              <Breadcrumb.Item>
+                { category.name }
+              </Breadcrumb.Item>
+            </IndexLinkContainer>
           )
         })
       }

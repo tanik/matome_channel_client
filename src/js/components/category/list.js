@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import{ Link } from 'react-router-dom'
 //import{ Grid } from 'react-bootstrap'
 import { Navbar, Nav, NavItem, Breadcrumb } from 'react-bootstrap';
+import { IndexLinkContainer } from 'react-router-bootstrap';
 
 export default class CategoryList extends Component {
   constructor(props) {
@@ -73,12 +74,13 @@ export default class CategoryList extends Component {
 
   renderRootCategory(category){
     return(
-      <NavItem
+      <IndexLinkContainer
         key={ `category-${category.id}`}
-        href={ `/categories/${category.id}${this.props.url_suffix}` }
-        active={ this.isSelected(category) }>
+        to={ `/categories/${category.id}${this.props.url_suffix}` }>
+        <NavItem active={ this.isSelected(category) }>
           { category.name }
-      </NavItem>
+        </NavItem>
+      </IndexLinkContainer>
     )
   }
 
@@ -94,11 +96,13 @@ export default class CategoryList extends Component {
       )
     }else{
       return(
-        <Breadcrumb.Item
+        <IndexLinkContainer
           key={ `category-${category.id}`}
-          href={ `/categories/${category.id}${this.props.url_suffix}` }>
-          { category.name }
-        </Breadcrumb.Item>
+          to={ `/categories/${category.id}${this.props.url_suffix}` }>
+          <Breadcrumb.Item>
+            { category.name }
+          </Breadcrumb.Item>
+        </IndexLinkContainer>
       )
     }
   }
