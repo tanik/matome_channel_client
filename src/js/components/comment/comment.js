@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Glyphicon, Thumbnail } from 'react-bootstrap'
-import Autolinker from 'autolinker'
 import moment from 'moment'
 import Time from 'react-time'
 import Interweave from 'interweave';
+import UrlMatcher from 'interweave/lib/matchers/Url';
 import AnchorMatcher from '../../utils/interweave/anchor_matcher'
 import Auth from '../../utils/auth'
 
@@ -50,6 +50,11 @@ export default class Comment extends Component {
     }
   }
 
+  handleClickURL(e){
+    e.preventDefault()
+    e.stopPropagation()
+    window.open(e.target.href)
+  }
 
   handleClickAnchor(e){
     e.preventDefault()
@@ -58,6 +63,10 @@ export default class Comment extends Component {
       board_id: this.props.comment.board_id,
       num: e.target.dataset.num
     })
+  }
+
+  handleClickThumbnail(e){
+    e.stopPropagation()
   }
 
   renderNum(){
@@ -103,17 +112,20 @@ export default class Comment extends Component {
   }
 
   renderContent(){
-    const html = Autolinker.link(this.props.comment.content, {
-      urls: {
-        schemeMatches: true,
-        wwwMatches: false,
-        tldMatches: false,
-      },
-      email: false,
-      phone: false,
-      stripPrefix: false,
-      stripTrailingSlash: false,
-    }).replace(/\r?\n/g, '<br/>')
+    const html = this.props.comment.content.replace(/\r?\n/g, '<br/>')
+    const url_matcher = new UrlMatcher('url', {validateTLD: false}, (match, props) => {
+      if(props.urlParts.scheme == 'http' || props.urlParts.scheme == 'https'){
+        return(
+          <a key={ `comment-${this.props.comment.id}-link-${match}-${Math.random()}` }
+             href={ match }
+             onClick={ this.handleClickURL.bind(this) }>
+            {match}
+          </a>
+        )
+      }else{
+        return(match)
+      }
+    })
     const anchor_matcher = new AnchorMatcher('anchor', {}, (match, props) => {
       return(
         <a key={ `comment-${this.props.comment.id}-content-${Math.random()}` }
@@ -123,7 +135,7 @@ export default class Comment extends Component {
         </a>
       )
     })
-    return (<Interweave tagName="div" content={ html } matchers={ [anchor_matcher] }/>)
+    return (<Interweave tagName="div" content={ html } matchers={ [url_matcher, anchor_matcher] }/>)
   }
 
   renderWebsites(){
@@ -133,7 +145,11 @@ export default class Comment extends Component {
         { this.props.comment.websites.map( (website) => {
             return(
               <li key={ `comment-${this.props.comment.id}-website-${website.id}` }>
-                <Thumbnail target="_BLANK" href={ website.full_url } src={ website.thumbnail_url } />
+                <Thumbnail
+                  onClick={ this.handleClickThumbnail.bind(this) }
+                  target="_BLANK"
+                  href={ website.full_url }
+                  src={ website.thumbnail_url } />
               </li>
             )
           })
@@ -150,7 +166,11 @@ export default class Comment extends Component {
         { this.props.comment.images.map( (image) => {
             return(
               <li key={ `comment-${this.props.comment.id}-image-${image.id}` }>
-                <Thumbnail target="_BLANK" href={ image.full_url } src={ image.thumbnail_url } />
+                <Thumbnail
+                  onClick={ this.handleClickThumbnail.bind(this) }
+                  target="_BLANK"
+                  href={ image.full_url }
+                  src={ image.thumbnail_url } />
               </li>
             )
           })
