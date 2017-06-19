@@ -4,7 +4,7 @@ import { Grid, Row, Col, Well, Glyphicon, Breadcrumb, Thumbnail, ProgressBar } f
 import { Link } from 'react-router-dom'
 import Gallery from 'react-photo-gallery';
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap'
+import { IndexLinkContainer } from 'react-router-bootstrap'
 import Comment from '../../components/comment/comment';
 import NewComment from '../../components/comment/new';
 import BoardCable from '../../cable/board'
@@ -197,7 +197,7 @@ export default class ShowBoard extends Component {
         {websites.map( website => {
           return(
             <li key={ `website-${website.id}` }>
-              <h5><Link to={ website.website.original_url }>{ website.website.title }</Link></h5>
+              <h5><a target='_BLANK' href={ website.website.original_url }>{ website.website.title }</a></h5>
               <Thumbnail target="_BLANK" href={website.website.full_url} src={website.website.thumbnail_url} />
             </li>
           )
