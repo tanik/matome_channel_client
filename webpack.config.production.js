@@ -13,8 +13,8 @@ module.exports = {
     app: path.join(__dirname, 'src/js/app.js')
   },
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: '[name].js'
+    path: path.join(__dirname, 'dist_prod'),
+    filename: '[name].[chunkhash].js',
   },
   devServer: {
     contentBase: 'dist',
@@ -54,7 +54,7 @@ module.exports = {
         })
       })()
     }),
-    new ExtractTextPlugin({ filename: '[name].css', disable: false, allChunks: true }),
+    new ExtractTextPlugin({ filename: '[name].[contenthash].css', disable: false, allChunks: true }),
     new webpack.LoaderOptionsPlugin({
       options: {
         postcss:[

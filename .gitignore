@@ -4,5 +4,6 @@ node_modules/
 dist/app.js
 dist/app.js.gz
 dist/app.css
+dist_prod/*
 **/*.un~
 **/*.swp

@@ -21,16 +21,7 @@ import MyBoards from './containers/user/board'
 import MyComments from './containers/user/comment'
 
 // styles
-import '../css/auth.css'
-import '../css/home.css'
-import '../css/about.css'
-import '../css/menu.css'
-import '../css/message.css'
-import '../css/category.css'
-import '../css/board.css'
-import '../css/comment.css'
-import '../css/footer.css'
-import '../css/mypage.css'
+import '../css/app.css'
 
 // store
 let store

@@ -1,5 +1,3 @@
-@import url('variables.css');
-
 .comment{
   background-color: var(--bgColor);
   border-bottom: 1px solid var(--borderColor);

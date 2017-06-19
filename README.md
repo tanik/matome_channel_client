@@ -18,8 +18,10 @@ yarn test
 ### デプロイ
 
 ~~~
-sh build.sh
+sh build.{env}.sh
 ~~~
+
+env=```prod```\|```staging```
 
 ### CI
 
