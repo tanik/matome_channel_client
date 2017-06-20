@@ -133,56 +133,6 @@ describe('actions', () => {
     expect(actions.changeFavoriteComment(favorite)).toEqual(expectedAction)
   })
 
-  it('should create an action to post comment async success', () => {
-    const board_id = 1
-    const name = ""
-    const content = "test content"
-    const response = {
-      id: 1,
-      name: name,
-      content: content,
-    }
-    nock(host)
-      .post(`/boards/${board_id}/comments`)
-      .reply(201, response)
-    const expectedActions = [{
-      type: types.POST_COMMENT_SUCCESS,
-      response: response,
-    }]
-    const store = mockStore({ board: {} })
-    return store.dispatch(actions.postCommentAsync(board_id, name, content)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions)
-    })
-  })
-
-  it('should create an action to post comment async failure', () => {
-    const board_id = 1
-    const name = ""
-    const content = "test content"
-    const errors = {
-      name: ['は1文字以上で入力してください'],
-      content: ['は1文字以上で入力してください'],
-    }
-    const error_messages = [
-      '名前は1文字以上で入力してください',
-      'コメントは1文字以上で入力してください',
-    ]
-    nock(host)
-      .post(`/boards/${board_id}/comments`)
-      .reply(422, errors)
-    const expectedActions = [{
-      type: types.POST_COMMENT_FAILURE,
-      error: errors,
-    },{
-      type: types.SET_ERRORS,
-      errors: error_messages,
-    }]
-    const store = mockStore({ board: {} })
-    return store.dispatch(actions.postCommentAsync(board_id, name, content)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions)
-    })
-  })
-
   it('should create an action to add board image', () => {
     const board_image = {id: 1, board_id: 1, image_id: 1}
     const expectedAction = {

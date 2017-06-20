@@ -4,7 +4,6 @@ const initialState = {
   board: {},
   has_more_images: false,
   has_more_websites: false,
-  post_comment_result: {},
 }
 
 export default (state = initialState, action) => {
@@ -16,7 +15,6 @@ export default (state = initialState, action) => {
         board: action.board,
         has_more_images: has_more_images,
         has_more_websites: has_more_websites,
-        post_comment_result: {},
       }
     }
     case action_type.ADD_COMMENT: {
@@ -40,7 +38,6 @@ export default (state = initialState, action) => {
         },
         has_more_images: state.has_more_images,
         has_more_websites: state.has_more_websites,
-        post_comment_result: {},
       }
     }
     case action_type.CHANGE_FAVORITE_BOARD: {
@@ -64,7 +61,6 @@ export default (state = initialState, action) => {
         },
         has_more_images: state.has_more_images,
         has_more_websites: state.has_more_websites,
-        post_comment_result: {},
       }
     }
     case action_type.CHANGE_FAVORITE_COMMENT: {
@@ -92,30 +88,7 @@ export default (state = initialState, action) => {
         },
         has_more_images: state.has_more_images,
         has_more_websites: state.has_more_websites,
-        post_comment_result: {},
       }
-    }
-    case action_type.POST_COMMENT_SUCCESS: {
-      return({
-        board: state.board,
-        has_more_images: state.has_more_images,
-        has_more_websites: state.has_more_websites,
-        post_comment_result: {
-          state: "success",
-          response: action.response,
-        }
-      })
-    }
-    case action_type.POST_COMMENT_FAILURE: {
-      return({
-        board: state.board,
-        has_more_images: state.has_more_images,
-        has_more_websites: state.has_more_websites,
-        post_comment_result: {
-          state: "failure",
-          error: action.error,
-        }
-      })
     }
     case action_type.ADD_BOARD_IMAGE: {
       let board = state.board
@@ -138,7 +111,6 @@ export default (state = initialState, action) => {
         },
         has_more_images: state.has_more_images,
         has_more_websites: state.has_more_websites,
-        post_comment_result: {},
       }
     }
     case action_type.ADD_BOARD_WEBSITE: {
@@ -162,7 +134,6 @@ export default (state = initialState, action) => {
         },
         has_more_images: state.has_more_images,
         has_more_websites: state.has_more_websites,
-        post_comment_result: {},
       }
     }
     case action_type.ADD_COMMENT_IMAGE: {
@@ -190,7 +161,6 @@ export default (state = initialState, action) => {
         },
         has_more_images: state.has_more_images,
         has_more_websites: state.has_more_websites,
-        post_comment_result: {},
       }
     }
     case action_type.ADD_COMMENT_WEBSITE: {
@@ -218,7 +188,6 @@ export default (state = initialState, action) => {
         },
         has_more_images: state.has_more_images,
         has_more_websites: state.has_more_websites,
-        post_comment_result: {},
       }
     }
     case action_type.GET_COMMENTS_SUCCESS: {
@@ -242,7 +211,6 @@ export default (state = initialState, action) => {
         },
         has_more_images: state.has_more_images,
         has_more_websites: state.has_more_websites,
-        post_comment_result: {},
       }
     }
     case action_type.GET_WEBSITES_SUCCESS: {
@@ -267,7 +235,6 @@ export default (state = initialState, action) => {
         },
         has_more_images: state.has_more_images,
         has_more_websites: has_more_websites,
-        post_comment_result: {},
       }
     }
     case action_type.GET_IMAGES_SUCCESS: {
@@ -292,7 +259,6 @@ export default (state = initialState, action) => {
         },
         has_more_images: has_more_images,
         has_more_websites: state.has_more_websites,
-        post_comment_result: {},
       }
     }
     default:

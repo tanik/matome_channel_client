@@ -8,7 +8,6 @@ import {
   setFavoriteCommentAsync,
   changeFavoriteBoard,
   changeFavoriteComment,
-  postCommentAsync,
   addBoardImage,
   addBoardWebsite,
   addCommentImage,
@@ -25,6 +24,11 @@ import {
   openCommentModal,
   changeFavoriteCommentOnModal,
 } from '../../actions/comment/comment_modal'
+
+import {
+  openNewCommentModal
+} from '../../actions/comment/new'
+
 import ShowBoard from '../../components/board/show'
 
 
@@ -52,9 +56,6 @@ function mapDispatchToProps(dispatch) {
     changeFavoriteComment: (favorite) => {
       dispatch(changeFavoriteCommentOnModal(favorite))
       dispatch(changeFavoriteComment(favorite))
-    },
-    postComment: (board_id, name, content) => {
-      dispatch(postCommentAsync(board_id, name, content))
     },
     addBoardImage: (board_image) => {
       dispatch(addBoardImage(board_image))
@@ -86,6 +87,9 @@ function mapDispatchToProps(dispatch) {
       }
       dispatch(openCommentModal())
     },
+    openNewCommentModal: (content) => {
+      dispatch(openNewCommentModal(content))
+    }
   }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShowBoard))

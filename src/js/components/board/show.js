@@ -6,7 +6,7 @@ import Gallery from 'react-photo-gallery';
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { IndexLinkContainer } from 'react-router-bootstrap'
 import Comment from '../../components/comment/comment';
-import NewComment from '../../components/comment/new';
+import NewComment from '../../containers/comment/new';
 import BoardCable from '../../cable/board'
 import Auth from '../../utils/auth';
 import CommentModal from '../../containers/comment/comment_modal';
@@ -84,12 +84,11 @@ export default class ShowBoard extends Component {
 
   openNewComment(e){
     e.preventDefault()
-    this.new_comment.open()
+    this.props.openNewCommentModal('')
   }
 
   reply(num){
-    this.new_comment.setContent(`>>${num}\n`)
-    this.new_comment.open()
+    this.props.openNewCommentModal(`>>${num}\n`)
   }
 
   favoriteComment(board_id, comment_id){
@@ -108,10 +107,6 @@ export default class ShowBoard extends Component {
     }else{
       this.props.history.push("/login")
     }
-  }
-
-  postComment(name, content){
-    this.props.postComment(this.props.board.id, name, content)
   }
 
   favoriteUserCount(){
@@ -303,9 +298,6 @@ export default class ShowBoard extends Component {
   }
 
   render() {
-    if(this.props.post_comment_result.state == "success"){
-      this.new_comment.close()
-    }
     return(
       <div className="board-show">
         <Well className="board-show-header">
@@ -347,10 +339,9 @@ export default class ShowBoard extends Component {
           </Row>
         </Grid>
         <NewComment
-          postComment={ this.postComment.bind(this) }
-          ref={ (ref) => this.new_comment = ref }/>
+          board_id={ this.getID() }/>
         <CommentModal
-          board_id={ this.props.board.id }
+          board_id={ this.getID() }
           comments={ [] }
           favorite={ this.favoriteComment.bind(this) }
           reply={ this.reply.bind(this) }
@@ -365,7 +356,6 @@ ShowBoard.propTypes = {
   board: PropTypes.object.isRequired,
   has_more_websites: PropTypes.bool.isRequired,
   has_more_images: PropTypes.bool.isRequired,
-  post_comment_result: PropTypes.object.isRequired,
   getBoard: PropTypes.func.isRequired,
   getComments: PropTypes.func.isRequired,
   getWebsites: PropTypes.func.isRequired,
@@ -374,8 +364,8 @@ ShowBoard.propTypes = {
   setFavoriteComment: PropTypes.func.isRequired,
   changeFavoriteBoard: PropTypes.func.isRequired,
   changeFavoriteComment: PropTypes.func.isRequired,
-  postComment: PropTypes.func.isRequired,
   addCommentImage: PropTypes.func.isRequired,
   addCommentWebsite: PropTypes.func.isRequired,
   showCommentModal: PropTypes.func.isRequired,
+  openNewCommentModal: PropTypes.func.isRequired,
 }

@@ -8,20 +8,20 @@ export default class NewComment extends Component {
   }
 
   componentWillMount() {
-    this.setState({show: false, content: ""})
+    this.setState({content: ''})
   }
 
-  open(){
-    this.setState({show: true})
+  componentDidUpdate (prevProps) {
+    if(prevProps.content != this.props.content){
+      this.setState({content: this.props.content})
+    }
   }
 
   close(){
-    this.setState({show: false, content: ""})
+    this.setState({content: ''})
+    this.props.closeNewCommentModal()
   }
 
-  setContent(content){
-    this.setState({content: content})
-  }
 
   post(e){
     e.preventDefault()
@@ -30,7 +30,7 @@ export default class NewComment extends Component {
     if(content.length == 0){
       return
     }
-    this.props.postComment(name, content)
+    this.props.postComment(this.props.board_id, name, content)
   }
 
   handleContentChange(e) {
@@ -39,7 +39,7 @@ export default class NewComment extends Component {
 
   render() {
     return(
-      <Modal show={ this.state.show } onHide={ this.close.bind(this) }>
+      <Modal show={ this.props.show } onHide={ this.close.bind(this) }>
         <Modal.Header closeButton>
           <Modal.Title>コメント書き込み</Modal.Title>
         </Modal.Header>
@@ -74,5 +74,11 @@ export default class NewComment extends Component {
 }
 
 NewComment.propTypes = {
+  show: PropTypes.bool.isRequired,
+  content: PropTypes.string.isRequired,
+  openNewCommentModal: PropTypes.func.isRequired,
+  closeNewCommentModal: PropTypes.func.isRequired,
   postComment: PropTypes.func.isRequired,
+  // not redux props
+  board_id: PropTypes.number.isRequired,
 }

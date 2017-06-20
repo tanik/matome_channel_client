@@ -21,7 +21,6 @@ describe('category list reducer', () => {
       board: {},
       has_more_images: false,
       has_more_websites: false,
-      post_comment_result: {},
     })
   })
 
@@ -42,13 +41,12 @@ describe('category list reducer', () => {
     }
     const has_more_images = false
     const has_more_websites = false
-    const post_comment_result = {}
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
+    const prevState = {board, has_more_images, has_more_websites}
     expect(
       reducer(prevState, {
         type: types.GET_BOARD, board
       })
-    ).toEqual({board, has_more_images, has_more_websites, post_comment_result})
+    ).toEqual({board, has_more_images, has_more_websites})
   })
 
   it('should handle ADD_COMMENT', () => {
@@ -66,10 +64,9 @@ describe('category list reducer', () => {
       images,
       favorite_user_ids: [],
     }
-    const post_comment_result = {}
     const has_more_images = false
     const has_more_websites = false
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
+    const prevState = {board, has_more_images, has_more_websites}
     const comment = {content: "comment2"} 
     expect(
       reducer(prevState, {
@@ -92,7 +89,6 @@ describe('category list reducer', () => {
       },
       has_more_images,
       has_more_websites,
-      post_comment_result
     })
   })
 
@@ -111,10 +107,9 @@ describe('category list reducer', () => {
       images,
       favorite_user_ids: [],
     }
-    const post_comment_result = {}
     const has_more_images = false
     const has_more_websites = false
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
+    const prevState = {board, has_more_images, has_more_websites}
     const favorite = {id: 1, user_id: 1, board_id: 1}
     expect(
       reducer(prevState, {
@@ -137,7 +132,6 @@ describe('category list reducer', () => {
       },
       has_more_images,
       has_more_websites,
-      post_comment_result
     })
   })
 
@@ -156,10 +150,9 @@ describe('category list reducer', () => {
       images,
       favorite_user_ids: [],
     }
-    const post_comment_result = {}
     const has_more_images = false
     const has_more_websites = false
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
+    const prevState = {board, has_more_images, has_more_websites}
     const favorite = {id: 1, user_id: 1, comment_id: 1} 
     expect(
       reducer(prevState, {
@@ -182,77 +175,6 @@ describe('category list reducer', () => {
       },
       has_more_images,
       has_more_websites,
-      post_comment_result
-    })
-  })
-
-  it('should handle POST_COMMENT_SUCCESS', () => {
-    const board =  {
-      id: 1,
-      title: "title",
-      fav_count: 1,
-      first_comment: "comment",
-      res_count: 1,
-      score: 20,
-      thumbnail_url: "/images/placeholder.png",
-      category_tree,
-      comments: [{id: 1, content: "comment", favorite_user_ids: []}],
-      websites,
-      images,
-      favorite_user_ids: [],
-    }
-    const post_comment_result = {}
-    const has_more_images = false
-    const has_more_websites = false
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
-    const response = {id: 1, name: 'test name', content: 'test content'}
-    expect(
-      reducer(prevState, {
-        type: types.POST_COMMENT_SUCCESS, response
-      })
-    ).toEqual({
-      board,
-      has_more_images,
-      has_more_websites,
-      post_comment_result: {
-        state: 'success',
-        response
-      }
-    })
-  })
-
-  it('should handle POST_COMMENT_FAILURE', () => {
-    const board =  {
-      id: 1,
-      title: "title",
-      fav_count: 1,
-      first_comment: "comment",
-      res_count: 1,
-      score: 20,
-      thumbnail_url: "/images/placeholder.png",
-      category_tree,
-      comments: [{id: 1, content: "comment", favorite_user_ids: []}],
-      websites,
-      images,
-      favorite_user_ids: [],
-    }
-    const post_comment_result = {}
-    const has_more_images = false
-    const has_more_websites = false
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
-    const error = {name: ['は1文字以上入力してください。']}
-    expect(
-      reducer(prevState, {
-        type: types.POST_COMMENT_FAILURE, error
-      })
-    ).toEqual({
-      board,
-      has_more_images,
-      has_more_websites,
-      post_comment_result: {
-        state: 'failure',
-        error
-      }
     })
   })
 
@@ -271,10 +193,9 @@ describe('category list reducer', () => {
       images,
       favorite_user_ids: [],
     }
-    const post_comment_result = {}
     const has_more_images = false
     const has_more_websites = false
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
+    const prevState = {board, has_more_images, has_more_websites}
     const board_image = {
       id: 1,
       board_id: 1,
@@ -306,7 +227,6 @@ describe('category list reducer', () => {
       },
       has_more_images,
       has_more_websites,
-      post_comment_result
     })
   })
 
@@ -325,10 +245,9 @@ describe('category list reducer', () => {
       images,
       favorite_user_ids: [],
     }
-    const post_comment_result = {}
     const has_more_images = false
     const has_more_websites = false
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
+    const prevState = {board, has_more_images, has_more_websites}
     const board_website = {
       id: 1,
       board_id: 1,
@@ -361,7 +280,6 @@ describe('category list reducer', () => {
       },
       has_more_images,
       has_more_websites,
-      post_comment_result
     })
   })
 
@@ -380,10 +298,9 @@ describe('category list reducer', () => {
       images,
       favorite_user_ids: [],
     }
-    const post_comment_result = {}
     const has_more_images = false
     const has_more_websites = false
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
+    const prevState = {board, has_more_images, has_more_websites}
     const comment_image = {
       id: 1,
       comment_id: 1,
@@ -415,7 +332,6 @@ describe('category list reducer', () => {
       },
       has_more_images,
       has_more_websites,
-      post_comment_result
     })
   })
 
@@ -434,10 +350,9 @@ describe('category list reducer', () => {
       images,
       favorite_user_ids: [],
     }
-    const post_comment_result = {}
     const has_more_images = false
     const has_more_websites = false
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
+    const prevState = {board, has_more_images, has_more_websites}
     const comment_website = {
       id: 1,
       comment_id: 1,
@@ -470,7 +385,6 @@ describe('category list reducer', () => {
       },
       has_more_images,
       has_more_websites,
-      post_comment_result
     })
   })
 
@@ -489,10 +403,9 @@ describe('category list reducer', () => {
       images,
       favorite_user_ids: [],
     }
-    const post_comment_result = {}
     const has_more_images = false
     const has_more_websites = false
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
+    const prevState = {board, has_more_images, has_more_websites}
     const comments = [
       {id: 2, content: "comment2", favorite_user_ids: [], images: [], websites: []},
     ]
@@ -520,7 +433,6 @@ describe('category list reducer', () => {
       },
       has_more_images,
       has_more_websites,
-      post_comment_result
     })
   })
 
@@ -539,10 +451,9 @@ describe('category list reducer', () => {
       images,
       favorite_user_ids: [],
     }
-    const post_comment_result = {}
     const has_more_images = false
     const has_more_websites = false
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
+    const prevState = {board, has_more_images, has_more_websites}
     const board_websites = [{
       id: 1,
       board_id: 1,
@@ -575,7 +486,6 @@ describe('category list reducer', () => {
       },
       has_more_images,
       has_more_websites: true,
-      post_comment_result
     })
   })
 
@@ -594,10 +504,9 @@ describe('category list reducer', () => {
       images,
       favorite_user_ids: [],
     }
-    const post_comment_result = {}
     const has_more_images = false
     const has_more_websites = false
-    const prevState = {board, has_more_images, has_more_websites, post_comment_result}
+    const prevState = {board, has_more_images, has_more_websites}
     const board_images = [{
       id: 1,
       board_id: 1,
@@ -629,7 +538,6 @@ describe('category list reducer', () => {
       },
       has_more_images: true,
       has_more_websites,
-      post_comment_result
     })
   })
 })
