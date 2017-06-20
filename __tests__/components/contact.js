@@ -1,16 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import sinon from 'sinon'
 import Contact from '../../src/js/components/contact'
-
-import {
-  Grid,
-  Well,
-  Col,
-  Button,
-  FormGroup,
-  FormControl,
-  ControlLabel,
-} from 'react-bootstrap';
+import { StaticRouter } from 'react-router'
 
 function setup(posted=false, errors={}) {
   const props = {
@@ -19,25 +11,67 @@ function setup(posted=false, errors={}) {
     setContactErrors: jest.fn(),
     postContact: jest.fn(),
   }
-
-  const enzymeWrapper = mount(<Contact {...props} />)
+  const context = {}
+  const wrapper = mount(
+    <StaticRouter location="/" context={context}>
+      <Contact {...props} />
+    </StaticRouter>
+  )
 
   return {
     props,
-    enzymeWrapper
+    wrapper
   }
 }
 
 describe('components', () => {
   describe('Contact', () => {
     it('should render self and subcomponents', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('h3').text()).toBe('お問い合わせ')
-      expect(enzymeWrapper.find('FormGroup').length).toBe(3)
-      expect(enzymeWrapper.find('Col').at(0).text()).toBe('メールアドレス')
-      expect(enzymeWrapper.find('Col').at(2).text()).toBe('お問い合わせ内容')
-      expect(enzymeWrapper.find('FormControl').at(0).props().type).toBe('email')
-      expect(enzymeWrapper.find('FormControl').at(1).props().rows).toBe('10')
+      const { wrapper } = setup()
+      expect(wrapper.find('h3').text()).toBe('お問い合わせ')
+      expect(wrapper.find('FormGroup').length).toBe(3)
+      expect(wrapper.find('Col').at(0).text()).toEqual('メールアドレス')
+      expect(wrapper.find('Col').at(2).text()).toEqual('お問い合わせ内容')
+      expect(wrapper.find('FormControl').at(0).props().type).toEqual('email')
+      expect(wrapper.find('FormControl').at(1).props().rows).toEqual('10')
+    })
+
+    it('should post contact', () => {
+      const { wrapper, props } = setup()
+      const email = 'test@example.com'
+      const content = 'test content'
+      wrapper.find('input').at(0).node.value = email
+      wrapper.find('textarea').at(0).node.value = content
+      expect(props.postContact.mock.calls.length).toBe(0)
+      wrapper.find('form').simulate('submit')
+      expect(props.postContact.mock.calls.length).toBe(1)
+    })
+
+    it('should render error when input values are empty', () => {
+      const { wrapper, props } = setup()
+      expect(props.setContactErrors.mock.calls.length).toBe(0)
+      wrapper.find('form').simulate('submit')
+      expect(props.setContactErrors.mock.calls.length).toBe(1)
+      expect(props.setContactErrors.mock.calls[0][0]).toEqual({
+        email: ['を入力してください'],
+        content: ['を入力してください'],
+        full_messages: [],
+      })
+    })
+
+    it('should render error when props has errors', () => {
+      const errors = {
+        email: ['を入力してください'],
+        content: ['を入力してください'],
+      }
+      const { wrapper } = setup(false, errors)
+      expect(wrapper.find('FormGroup').at(0).props().validationState).toEqual("error")
+      expect(wrapper.find('FormGroup').at(1).props().validationState).toEqual("error")
+    })
+
+    it('should redirect after post succeed', () => {
+      const { wrapper } = setup(true)
+      expect(wrapper.find('Redirect').props().to).toBe('/')
     })
   })
 })
