@@ -41,6 +41,8 @@ export const OPEN_NEW_BOARD_MODAL              = 'OPEN_NEW_BOARD_MODAL'
 export const CLOSE_NEW_BOARD_MODAL             = 'CLOSE_NEW_BOARD_MODAL'
 export const POST_BOARD_SUCCESS                = 'POST_BOARD_SUCCESS'
 export const POST_BOARD_FAILURE                = 'POST_BOARD_FAILURE'
+export const CLEAR_POST_RESULT                 = 'CLEAR_POST_RESULT'
+
 // board show
 export const ADD_COMMENT                       = 'ADD_COMMENT'
 export const CHANGE_FAVORITE_BOARD             = 'CHANGE_FAVORITE_BOARD'

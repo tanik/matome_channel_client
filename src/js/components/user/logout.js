@@ -30,6 +30,6 @@ export default class Logout extends Component {
 }
 
 Logout.propTypes = {
-  logouted: PropTypes.bool.isRequired,
+  toggle: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
 }

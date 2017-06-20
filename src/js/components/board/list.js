@@ -63,7 +63,7 @@ export default class BoardList extends Component {
         />
         <Grid className='board-list'>
           { this.props.boards.map( board =>
-            <Board key={board.id} board={board} />
+            <Board key={`board-${board.id}`} board={board} />
           ) }
           <Pagination
             prev

@@ -6,29 +6,39 @@ describe('user logout reducer', () => {
     expect(
       reducer(undefined, {})
     ).toEqual({
-      logouted: false,
+      toggle: false,
     })
   })
 
-  it('should handle LOGOUT_SUCCESS', () => {
+  it('should handle LOGOUT_SUCCESS when before toggle is false', () => {
     const prevState = {
-      logouted: false,
+      toggle: false,
     }
     expect(
       reducer(prevState, {type: types.LOGOUT_SUCCESS})
     ).toEqual({
-      logouted: true,
+      toggle: true,
+    })
+  })
+  it('should handle LOGOUT_SUCCESS when before toggle is true', () => {
+    const prevState = {
+      toggle: true,
+    }
+    expect(
+      reducer(prevState, {type: types.LOGOUT_SUCCESS})
+    ).toEqual({
+      toggle: false,
     })
   })
 
   it('should handle LOGIN_FAILURE', () => {
     const prevState = {
-      logouted: false,
+      toggle: false,
     }
     expect(
       reducer(prevState, {type: types.LOGOUT_FAILURE})
     ).toEqual({
-      logouted: false,
+      toggle: false,
     })
   })
 })

@@ -113,4 +113,27 @@ describe('new board reducer', () => {
       }
     })
   })
+
+  it('should handle CLEAR_POST_RESULT', () => {
+    const prevState = {
+      show: true,
+      categories: [],
+      post_board_result: {
+        state: "success",
+        response: {
+          id: 1,
+          title: 'board title',
+        }
+      }
+    }
+    expect(
+      reducer(prevState, {
+        type: types.CLEAR_POST_RESULT
+      })
+    ).toEqual({
+      show: false,
+      categories: [],
+      post_board_result: {}
+    })
+  })
 })

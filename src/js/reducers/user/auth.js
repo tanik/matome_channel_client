@@ -17,12 +17,16 @@ export default (state = initialState, action) => {
         // set auth
         if(action.auth.user_id || (action.auth.expiry && action.auth.expiry > state.expiry)){
           set_keys.forEach( (key) => auth[key] = action.auth[key] )
-        }else{
-          console.warn('old token received', auth, action.auth)
         }
       }else{
         // clear auth
-        auth = initialState
+        auth = {
+          "uid": "",
+          "client": "",
+          "access-token": "",
+          "expiry": 0,
+          "user_id": null,
+        }
       }
       return auth
     }

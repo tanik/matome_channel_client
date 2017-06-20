@@ -94,4 +94,10 @@ describe('actions', () => {
     }
     expect(actions.closeNewBoardModal()).toEqual(expectedAction)
   })
+  it('should create an action to clear post result', () => {
+    const expectedAction = {
+      type: types.CLEAR_POST_RESULT
+    }
+    expect(actions.clearPostResult()).toEqual(expectedAction)
+  })
 })

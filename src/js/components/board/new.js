@@ -8,9 +8,6 @@ export default class NewBoard extends Component {
     super(props)
   }
 
-  componentWillMount() {
-  }
-
   post(e){
     e.preventDefault()
     const category_id = this.board_category.value
@@ -74,6 +71,7 @@ export default class NewBoard extends Component {
 
   render() {
     if(this.props.post_board_result.state == "success"){
+      this.props.clearPostResult()
       return(<Redirect to={`/boards/${this.props.post_board_result.response.id}`} />)
     }else{
       return(this.renderModal())
@@ -86,6 +84,7 @@ NewBoard.propTypes = {
   categories: PropTypes.array.isRequired,
   post_board_result: PropTypes.object.isRequired,
   postBoard: PropTypes.func.isRequired,
+  clearPostResult: PropTypes.func.isRequired,
   openNewBoardModal: PropTypes.func.isRequired,
   closeNewBoardModal: PropTypes.func.isRequired,
 }

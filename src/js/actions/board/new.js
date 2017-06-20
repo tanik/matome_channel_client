@@ -14,8 +14,6 @@ export const postBoardAsync = (category_id, title,  name, content) => {
   return dispatch => {
     return MatomeChannel.Board.create(category_id, title,  name, content, dispatch).then( (resp) => {
       dispatch(postBoardSuccess(resp.data))
-      // なんかうまく画面遷移してくれない・・なぜなの・・
-      //dispatch(push(`/boards/${resp.data.id}`))
     }).catch( (error) => {
       let error_messages = ["エラーが発生しました。しばらくお待ちいただいてから再度リトライしてください。"]
       let error_attributes = {}
@@ -51,4 +49,8 @@ export const openNewBoardModal = () => {
 
 export const closeNewBoardModal = () => {
   return { type: type.CLOSE_NEW_BOARD_MODAL }
+}
+
+export const clearPostResult = () => {
+  return { type: type.CLEAR_POST_RESULT }
 }

@@ -49,6 +49,13 @@ export default (state = initialState, action) => {
         },
       }
     }
+    case action_type.CLEAR_POST_RESULT: {
+      return {
+        show: false,
+        categories: state.categories,
+        post_board_result: {},
+      }
+    }
     default:
       return state
   }

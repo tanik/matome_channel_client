@@ -5,6 +5,7 @@ import {
   openNewBoardModal,
   closeNewBoardModal,
   postBoardAsync,
+  clearPostResult,
 } from '../../actions/board/new'
 import NewBoard from '../../components/board/new'
 
@@ -23,6 +24,9 @@ function mapDispatchToProps(dispatch) {
     postBoard: (category_id, title,  name, content) => {
       dispatch(postBoardAsync(category_id, title,  name, content))
     },
+    clearPostResult: () => {
+      dispatch(clearPostResult())
+    }
   }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewBoard))
