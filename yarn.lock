@@ -5674,6 +5674,13 @@ react-router@^4.1.1:
     prop-types "^15.5.4"
     warning "^3.0.0"
 
+react-test-renderer@^15.6.1:
+  version "15.6.1"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-15.6.1.tgz#026f4a5bb5552661fd2cc4bbcd0d4bc8a35ebf7e"
+  dependencies:
+    fbjs "^0.8.9"
+    object-assign "^4.1.0"
+
 react-time@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-time/-/react-time-4.3.0.tgz#b37507b8b5278f03a8e7f2bfe70911824a8991dd"

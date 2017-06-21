@@ -188,7 +188,7 @@ export default class ShowBoard extends Component {
         hasMore={ this.props.has_more_websites }
         loader={ <ProgressBar active now={100} /> }
         endMessage={ "-" } >
-        <ul className="list-inline">
+        <ul className="website-list list-inline">
         {websites.map( website => {
           return(
             <li key={ `website-${website.id}` }>
@@ -232,10 +232,6 @@ export default class ShowBoard extends Component {
   openImage(index, event){
     event.preventDefault();
     window.open(this.props.board.images[index].image.full_url)
-  }
-
-  renderMovies(){
-    return(<div className="alert alert-warning">未実装なのだ・・・。</div>)
   }
 
   renderContent(){
@@ -364,6 +360,9 @@ ShowBoard.propTypes = {
   setFavoriteComment: PropTypes.func.isRequired,
   changeFavoriteBoard: PropTypes.func.isRequired,
   changeFavoriteComment: PropTypes.func.isRequired,
+  addComment: PropTypes.func.isRequired,
+  addBoardImage: PropTypes.func.isRequired,
+  addBoardWebsite: PropTypes.func.isRequired,
   addCommentImage: PropTypes.func.isRequired,
   addCommentWebsite: PropTypes.func.isRequired,
   showCommentModal: PropTypes.func.isRequired,
