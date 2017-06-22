@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import{ Link } from 'react-router-dom'
-//import{ Grid } from 'react-bootstrap'
 import { Navbar, Nav, NavItem, Breadcrumb } from 'react-bootstrap';
 import { IndexLinkContainer } from 'react-router-bootstrap';
 

@@ -17,11 +17,11 @@
     &-name.mine{
       color: var(--myCommentNameColor);
     }
-    &-created_at{
+    &-created-at{
       color: #111;
       margin-left: 20px; 
     }
-    &-hash_id{
+    &-hash-id{
       color: #111;
       margin-left: 20px; 
     }

@@ -93,7 +93,7 @@ export default class Comment extends Component {
   renderCreatedAt(){
     if(this.isShow('created_at')){
       return(
-        <span className="comment-header-created_at">
+        <span className="comment-header-created-at">
           <Time value={ new Date(this.props.comment.created_at) }
             format="YYYY[年]MM[月]DD[日] (dddd) HH:mm:ss"/>
         </span>
@@ -104,7 +104,7 @@ export default class Comment extends Component {
   renderHashId(){
     if(this.isShow('hash_id')){
       return(
-        <span className="comment-header-hash_id">
+        <span className="comment-header-hash-id">
           ID: { this.props.comment.hash_id }
         </span>
       )
@@ -113,8 +113,8 @@ export default class Comment extends Component {
 
   renderContent(){
     const html = this.props.comment.content.replace(/\r?\n/g, '<br/>')
-    const url_matcher = new UrlMatcher('url', {validateTLD: false}, (match, props) => {
-      if(props.urlParts.scheme == 'http' || props.urlParts.scheme == 'https'){
+    const url_matcher = new UrlMatcher('url', {validateTLD: false}, (match) => {
+      if(match.startsWith('http://') || match.startsWith('https://')){
         return(
           <a key={ `comment-${this.props.comment.id}-link-${match}-${Math.random()}` }
              href={ match }
@@ -129,19 +129,24 @@ export default class Comment extends Component {
     const anchor_matcher = new AnchorMatcher('anchor', {}, (match, props) => {
       return(
         <a key={ `comment-${this.props.comment.id}-content-${Math.random()}` }
-           data-num={ props.extraProp }
+           data-num={ props.num }
            onClick={ this.handleClickAnchor.bind(this) }>
           {match}
         </a>
       )
     })
-    return (<Interweave tagName="div" content={ html } matchers={ [url_matcher, anchor_matcher] }/>)
+    return (
+      <Interweave
+        tagName="div"
+        content={ html }
+        matchers={ [url_matcher, anchor_matcher] }/>
+    )
   }
 
   renderWebsites(){
     if(this.isShow('websites')){
       return (
-        <ul className="comment-image-list list-inline">
+        <ul className="comment-website-list list-inline">
         { this.props.comment.websites.map( (website) => {
             return(
               <li key={ `comment-${this.props.comment.id}-website-${website.id}` }>

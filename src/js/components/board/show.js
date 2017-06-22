@@ -337,8 +337,6 @@ export default class ShowBoard extends Component {
         <NewComment
           board_id={ this.getID() }/>
         <CommentModal
-          board_id={ this.getID() }
-          comments={ [] }
           favorite={ this.favoriteComment.bind(this) }
           reply={ this.reply.bind(this) }
           showCommentModal={ this.showCommentModal.bind(this) }

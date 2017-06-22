@@ -58,7 +58,6 @@ CommentModal.propTypes = {
   getRelatedCommentsAsync: PropTypes.func.isRequired,
   getCommentsByNumAsync: PropTypes.func.isRequired,
   // not redux props
-  board_id: PropTypes.number,
   favorite: PropTypes.func.isRequired,
   reply: PropTypes.func.isRequired,
   showCommentModal: PropTypes.func.isRequired,

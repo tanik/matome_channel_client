@@ -10,7 +10,7 @@ export default class AnchorMatcher extends Matcher {
 
     return {
       match: matches[0],
-      extraProp: matches[1],
+      num: matches[1],
     };
   }
 
