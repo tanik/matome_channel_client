@@ -24,7 +24,7 @@ export default class Footer extends React.Component {
         <Well className="about-header">
           <Grid>
             <div className='about-header-name'>
-              <strong>まとめ<img src='http://img.m-ch.xyz/statics/icon.png' width='64px'/>ちゃんねる</strong>とは…
+              <strong>まとめ<img src='https://img.m-ch.xyz/statics/icon.png' width='64px'/>ちゃんねる</strong>とは…
             </div>
             <p className='about-header-description'>
               匿名掲示板です。
