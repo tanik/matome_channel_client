@@ -11,7 +11,9 @@ export default class MyComments extends Component {
   }
 
   componentWillMount() {
-    this.getMyComments()
+    if(Auth.isAuthorized()){
+      this.getMyComments()
+    }
   }
 
   getMyComments(page, per) {

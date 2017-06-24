@@ -9,12 +9,6 @@ export default class Login extends Component {
     super(props)
   }
 
-  componentWillMount() {
-  }
-
-  componentWillUnmount(){
-  }
-
   login(e){
     e.preventDefault();
     this.props.login(this.email.value, this.password.value)

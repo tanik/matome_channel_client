@@ -10,7 +10,9 @@ export default class Logout extends Component {
   }
 
   componentWillMount() {
-    this.props.logout()
+    if(Auth.isAuthorized()){
+      this.props.logout()
+    }
   }
 
   render(){

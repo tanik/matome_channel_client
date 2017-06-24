@@ -11,7 +11,9 @@ export default class MyBoards extends Component {
   }
 
   componentWillMount() {
-    this.getMyBoards()
+    if(Auth.isAuthorized()){
+      this.getMyBoards()
+    }
   }
 
   getMyBoards(page, per) {

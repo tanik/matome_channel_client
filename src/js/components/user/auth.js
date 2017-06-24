@@ -7,16 +7,12 @@ export default class Auth extends Component {
     super(props)
   }
 
-  componentWillMount() {
-  }
-
-  componentWillUpdate(nextProps) {
-  }
-
   isAuthorized(){
     if(this.props.uid &&
        this.props.client &&
-       this.props['access-token']){
+       this.props['access-token'] &&
+       this.props.expiry
+    ){
       return true
     }else{
       return false
