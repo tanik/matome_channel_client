@@ -3,11 +3,7 @@ import React, { Component } from 'react'
 import {
   Grid,
   Well,
-//Row,
-//Col,
-//Panel,
 } from 'react-bootstrap';
-//import { Link } from 'react-router-dom'
 import Board from '../../components/board/board'
 import Comment from '../../components/comment/comment';
 import CategoryList from '../../containers/category/list'

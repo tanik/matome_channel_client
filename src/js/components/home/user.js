@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import {
   Grid,
   Well,
-//  Row,
   Col,
   Panel,
   ProgressBar,
@@ -134,13 +133,13 @@ export default class UserHome extends Component {
     }
   }
 
+  /* TODO
   renderRecommends(){
     if(this.props.recommends.length > 0){
-      // TODO
-      // return(
-      //   this.props.recommends.map( (board) => {
-      //   })
-      // )
+      return(
+        this.props.recommends.map( (board) => {
+        })
+      )
     }else{
       return(
         <div>
@@ -149,6 +148,7 @@ export default class UserHome extends Component {
       )
     }
   }
+  */
 
   renderHistories(){
     if(this.props.histories.length > 0){

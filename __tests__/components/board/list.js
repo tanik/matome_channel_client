@@ -55,6 +55,9 @@ function setup(boards=[], pagination={}, pathname='/boards', category_id=undefin
     getBoards: jest.fn(),
     openNewBoardModal: jest.fn(),
   }
+  nock(host)
+    .get('/categories')
+    .reply(200, categories)
   const context = {}
   const store = require("../../../src/js/stores/store_dev").store
   const wrapper = mount(
@@ -74,35 +77,23 @@ function setup(boards=[], pagination={}, pathname='/boards', category_id=undefin
 describe('components', () => {
   describe('BoardList', () => {
     it('should render board list page', () => {
-      nock(host)
-        .get('/categories')
-        .reply(200, categories)
       const { wrapper, props } = setup(boards, {})
       expect(wrapper.find('.board-title h2').text()).toEqual('スレッド一覧')
       expect(props.getBoards.mock.calls[0]).toEqual([1, 20, 0, null])
     })
 
     it('should render board list page when category selected', () => {
-      nock(host)
-        .get('/categories')
-        .reply(200, categories)
       const { wrapper, props } = setup(boards, {}, '/categories/1/boards', 1)
       expect(wrapper.find('.board-title h2').text()).toEqual('スレッド一覧')
     })
 
     it('should render board list page', () => {
-      nock(host)
-        .get('/categories')
-        .reply(200, categories)
       const { wrapper, props } = setup(boards, {})
       wrapper.find('Pagination').props().onSelect(2)
       expect(props.getBoards.mock.calls[1]).toEqual([2, 20, 0, null])
     })
 
     it('should render boards when category changed', () => {
-      nock(host)
-        .get('/categories')
-        .reply(200, categories)
       const { wrapper, props } = setup(boards, {})
       wrapper.update()
       expect(props.getBoards.mock.calls[0]).toEqual([1, 20, 0, null])
