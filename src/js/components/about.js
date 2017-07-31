@@ -15,7 +15,7 @@ export default class Footer extends React.Component {
   }
 
   tooltip(){
-    return(<Tooltip id="tooltip">気になったら問い合わせからご連絡ください！お願いします！なんでもしますから！</Tooltip>)
+    return(<Tooltip id="tooltip">就職しました！でも、気になったら問い合わせからご連絡ください！お願いします！</Tooltip>)
   }
 
   render () {
@@ -69,7 +69,7 @@ export default class Footer extends React.Component {
           <p>
             偉そうにまとめてみましたが、まとめちゃんねるは勉強用＆
             <OverlayTrigger placement="top" overlay={ this.tooltip() }>
-              <strong className='want-job'>求職</strong>
+              <strong className='want-job'>転職アピール</strong>
             </OverlayTrigger>
             のアピール用に作ったWEBサービスです。
           </p>
